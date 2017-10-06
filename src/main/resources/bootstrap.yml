@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: nalbam-bot
+  profiles:
+    active: ${PROFILE:default}
