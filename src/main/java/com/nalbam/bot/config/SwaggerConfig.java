@@ -1,5 +1,6 @@
 package com.nalbam.bot.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -15,10 +16,11 @@ import java.util.ArrayList;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    //@Value("${spring.application.name}")
-    private final String name = "bot";
+    @Value("${nalbam.application.base}")
+    private String base;
 
-    private final String base = "com.nalbam";
+    @Value("${nalbam.application.name}")
+    private String name;
 
     @Bean
     public Docket api() {

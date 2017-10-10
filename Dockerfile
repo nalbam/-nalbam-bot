@@ -7,6 +7,7 @@ MAINTAINER me@nalbam.com
 RUN curl -s toast.sh/install | bash
 RUN ~/toaster/toast.sh config eb local nalbam
 RUN ~/toaster/toast.sh init java
+RUN ~/toaster/toast.sh init redis
 RUN ~/toaster/toast.sh init eb
 
 ENV PATH "/usr/local/java/bin:${PATH}"

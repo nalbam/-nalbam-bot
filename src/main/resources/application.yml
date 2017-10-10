@@ -6,7 +6,18 @@ spring:
     time-zone: Asia/Seoul
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
+#  redis:
+#    host: localhost
+#    database: 1
 
 logging:
   level:
     com.nalbam: DEBUG
+
+nalbam:
+  application:
+    name: nalbam-bot
+    base: com.nalbam
+  cache:
+    expire:
+      seconds: 600

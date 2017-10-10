@@ -25,17 +25,19 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- versions -->
-        <common-lib.version>0.0.6</common-lib.version>
-        <hikaricp.version>2.6.3</hikaricp.version>
         <netty.version>4.1.15.Final</netty.version>
-        <querydsl.version>4.1.4</querydsl.version>
         <swagger.version>2.7.0</swagger.version>
     </properties>
 
     <dependencies>
+        <!-- spring-boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <!-- netty -->
