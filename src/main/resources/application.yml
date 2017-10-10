@@ -15,9 +15,23 @@ logging:
     com.nalbam: DEBUG
 
 nalbam:
-  application:
-    name: nalbam-bot
+  app:
+    name: bot
     base: com.nalbam
   cache:
-    expire:
-      seconds: 600
+    expire: 600
+  trade:
+    buy:
+      per: 0.03
+      krw: 5000
+    sell:
+      per: 0.03
+      krw: 5000
+    init:
+      krw: 100000
+  coinone:
+    access-key: ${COINONE_ACCESS_KEY}
+    secret-key: ${COINONE_SECRET_KEY}
+  korbit:
+    access-key: ${KORBIT_ACCESS_KEY}
+    secret-key: ${KORBIT_SECRET_KEY}

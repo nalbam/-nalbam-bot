@@ -20,7 +20,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 @Configuration
 public class CachingConfig extends CachingConfigurerSupport {
 
-    @Value("${cache.expire.seconds:600}")
+    @Value("${nalbam.cache.expire:600}")
     private Integer defaultExpireTime; // seconds
 
     @Bean

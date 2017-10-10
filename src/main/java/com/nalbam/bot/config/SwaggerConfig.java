@@ -16,10 +16,10 @@ import java.util.ArrayList;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Value("${nalbam.application.base}")
+    @Value("${nalbam.app.base}")
     private String base;
 
-    @Value("${nalbam.application.name}")
+    @Value("${nalbam.app.name}")
     private String name;
 
     @Bean
