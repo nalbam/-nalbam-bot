@@ -1,9 +1,7 @@
-package com.nalbam.bot.coin.config;
+package com.nalbam.bot.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.Pageable;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -17,8 +15,8 @@ import java.util.ArrayList;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Value("${spring.application.name}")
-    private String title;
+    //@Value("${spring.application.name}")
+    private final String name = "bot";
 
     @Bean
     public Docket api() {
@@ -27,8 +25,8 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.nalbam"))
                 .paths(PathSelectors.any())
                 .build()
-                .ignoredParameterTypes(Pageable.class)
-                .apiInfo(new ApiInfo(this.title, "", "", "", ApiInfo.DEFAULT_CONTACT, "", "", new ArrayList<>()));
+                //.ignoredParameterTypes(Pageable.class)
+                .apiInfo(new ApiInfo(this.name, "", "", "", ApiInfo.DEFAULT_CONTACT, "", "", new ArrayList<>()));
     }
 
 }

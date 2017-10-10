@@ -1,4 +1,4 @@
-package com.nalbam.bot.coin;
+package com.nalbam.bot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @SpringBootApplication
-public class CoinBotApplication {
+public class BotApplication {
 
-    public static void main(final String[] args) throws Exception {
-        SpringApplication.run(CoinBotApplication.class, args);
+    public static void main(final String[] args) {
+        SpringApplication.run(BotApplication.class, args);
     }
 
 }

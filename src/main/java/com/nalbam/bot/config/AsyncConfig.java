@@ -1,7 +1,6 @@
-package com.nalbam.bot.coin.config;
+package com.nalbam.bot.config;
 
 import io.netty.handler.ssl.SslContextBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.Netty4ClientHttpRequestFactory;
@@ -18,8 +17,8 @@ import java.util.concurrent.Executor;
 @Configuration
 public class AsyncConfig extends AsyncConfigurerSupport {
 
-    @Value("${spring.application.name}")
-    private String name;
+    //@Value("${spring.application.name}")
+    private final String name = "bot";
 
     @Bean
     public RestTemplate restTemplate() throws SSLException {

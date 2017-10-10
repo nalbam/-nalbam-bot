@@ -1,4 +1,4 @@
-package com.nalbam.bot.coin;
+package com.nalbam.bot;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-public class CoinBotApplicationTests {
+public class BotApplicationTests {
 
     @Test
     public void contextLoads() {
