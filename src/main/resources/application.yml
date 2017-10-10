@@ -6,9 +6,9 @@ spring:
     time-zone: Asia/Seoul
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
-#  redis:
-#    host: localhost
-#    database: 1
+  redis:
+    host: localhost
+    database: 5
 
 logging:
   level:
