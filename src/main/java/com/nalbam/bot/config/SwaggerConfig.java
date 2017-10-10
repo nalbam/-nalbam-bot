@@ -18,11 +18,13 @@ public class SwaggerConfig {
     //@Value("${spring.application.name}")
     private final String name = "bot";
 
+    private final String base = "com.nalbam";
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.nalbam"))
+                .apis(RequestHandlerSelectors.basePackage(this.base))
                 .paths(PathSelectors.any())
                 .build()
                 //.ignoredParameterTypes(Pageable.class)
