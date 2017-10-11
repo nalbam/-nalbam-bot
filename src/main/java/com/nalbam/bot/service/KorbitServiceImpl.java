@@ -130,20 +130,12 @@ public class KorbitServiceImpl implements KorbitService {
         final Float high_low = high - (high * this.sell_per);
         final Float low_high = low + (low * this.sell_per);
 
-        log.info("* korbit ++   : {} ", high);
-        log.info("* korbit +    : {} ", high_low);
-        log.info("* korbit last : {} ", last);
-        log.info("* korbit -    : {} ", low_high);
-        log.info("* korbit --   : {} ", low);
-
         if (high == 0 || high <= last) {
             high = last;
         } else {
             // 팔자
             if (high_low > last) {
                 sell = true;
-
-                log.info("* korbit sell : {} > {}", high_low, last);
             }
         }
 
@@ -153,8 +145,6 @@ public class KorbitServiceImpl implements KorbitService {
             // 사자
             if (low_high < last) {
                 buy = true;
-
-                log.info("* korbit buy : {} > {}", low_high, last);
             }
         }
 
@@ -164,35 +154,64 @@ public class KorbitServiceImpl implements KorbitService {
         Float krw = Float.parseFloat(((Map) balances.get("krw")).get("available").toString());
         Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
-        log.info("* korbit krw : {} ", krw);
-        log.info("* korbit btc : {} ", btc);
+        if (sell || buy) {
+            log.info("* korbit ----------------------------");
+            log.info("* korbit ++   : {} ", high);
+            log.info("* korbit +    : {} ", high_low);
+            log.info("* korbit last : {} ", last);
+            log.info("* korbit -    : {} ", low_high);
+            log.info("* korbit --   : {} ", low);
+            log.info("* korbit ----------------------------");
+
+            if (sell) {
+                log.info("* korbit sell : {} ", true);
+            }
+            if (buy) {
+                log.info("* korbit buy  : {} ", true);
+            }
+
+            log.info("* korbit ----------------------------");
+
+            log.info("* korbit krw  : {} ", krw);
+            log.info("* korbit btc  : {} ", btc);
+
+            log.info("* korbit ----------------------------");
+        }
 
         Map result = null;
 
-        if (sell && btc > 0) {
-            if (btc > this.sell_btc) {
-                btc = this.sell_btc;
+        if (sell) {
+            if (btc > 0) {
+                if (btc > this.sell_btc) {
+                    btc = this.sell_btc;
+                }
+
+                // TODO 팔자
+                result = this.korbitRepository.sell(accessToken, btc);
+
+                log.info("* korbit sell : {} {}", btc, result);
+
+                buy = false;
             } else {
                 high = last;
                 low = last;
             }
+        }
 
-            // TODO 팔자
-            result = this.korbitRepository.sell(accessToken, btc);
+        if (buy) {
+            if (krw > 0) {
+                if (krw > this.buy_krw) {
+                    krw = this.buy_krw;
+                }
 
-            log.info("* korbit sell : {} {}", btc, result);
-        } else if (buy && krw > 0) {
-            if (krw > this.buy_krw) {
-                krw = this.buy_krw;
+                // TODO 사자
+                result = this.korbitRepository.buy(accessToken, krw.longValue());
+
+                log.info("* korbit buy  : {} {}", krw, result);
             } else {
                 high = last;
                 low = last;
             }
-
-            // TODO 사자
-            result = this.korbitRepository.buy(accessToken, krw.longValue());
-
-            log.info("* korbit buy  : {} {}", krw, result);
         }
 
         // 기준가 저장 (토큰)

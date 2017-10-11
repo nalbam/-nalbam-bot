@@ -163,6 +163,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
+            log.error("* error buy  {} ", params);
             log.error(e.getMessage());
             e.printStackTrace();
         }
@@ -187,6 +188,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
+            log.error("* error sell {} ", params);
             log.error(e.getMessage());
             e.printStackTrace();
         }
