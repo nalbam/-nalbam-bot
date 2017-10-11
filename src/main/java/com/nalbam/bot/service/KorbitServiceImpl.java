@@ -1,7 +1,9 @@
 package com.nalbam.bot.service;
 
 import com.nalbam.bot.repository.KorbitRepository;
+import com.nalbam.bot.repository.SlackRepository;
 import com.nalbam.bot.repository.TokenRepository;
+import in.ashwanthkumar.slack.webhook.SlackMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +36,9 @@ public class KorbitServiceImpl implements KorbitService {
 
     @Autowired
     private TokenRepository tokenRepository;
+
+    @Autowired
+    private SlackRepository slackRepository;
 
     @Override
     public Map getTicker() {
@@ -191,6 +196,12 @@ public class KorbitServiceImpl implements KorbitService {
 
                 log.info("* korbit sell : {} {}", btc, result);
 
+                try {
+                    this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
+                } catch (final Exception e) {
+                    log.info("slack error : {}", e.getMessage());
+                }
+
                 buy = false;
             } else {
                 high = last;
@@ -208,6 +219,12 @@ public class KorbitServiceImpl implements KorbitService {
                 result = this.korbitRepository.buy(accessToken, krw.longValue());
 
                 log.info("* korbit buy  : {} {}", krw, result);
+
+                try {
+                    this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
+                } catch (final Exception e) {
+                    log.info("slack error : {}", e.getMessage());
+                }
             } else {
                 high = last;
                 low = last;
