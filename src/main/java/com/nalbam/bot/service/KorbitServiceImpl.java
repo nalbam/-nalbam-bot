@@ -3,7 +3,6 @@ package com.nalbam.bot.service;
 import com.nalbam.bot.repository.KorbitRepository;
 import com.nalbam.bot.repository.SlackRepository;
 import com.nalbam.bot.repository.TokenRepository;
-import in.ashwanthkumar.slack.webhook.SlackMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -167,11 +166,7 @@ public class KorbitServiceImpl implements KorbitService {
 
             log.info("* korbit ----------------------------");
 
-            try {
-                this.slackRepository.send(new SlackMessage().quote("sell " + sell).quote("buy " + buy));
-            } catch (final Exception e) {
-                log.info("slack error : {}", e.getMessage());
-            }
+            //this.slackRepository.send(new SlackMessage().quote("sell " + sell).quote("buy " + buy));
         }
 
         Map result = null;
@@ -185,13 +180,9 @@ public class KorbitServiceImpl implements KorbitService {
                 // TODO 팔자
                 result = this.korbitRepository.sell(accessToken, btc);
 
-                log.info("* korbit sell : {} {}", btc, result);
+                log.info("* korbit sell : {} : {}", btc, result);
 
-                try {
-                    this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
-                } catch (final Exception e) {
-                    log.info("slack error : {}", e.getMessage());
-                }
+                //this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
 
                 buy = false;
             } else {
@@ -209,13 +200,9 @@ public class KorbitServiceImpl implements KorbitService {
                 // TODO 사자
                 result = this.korbitRepository.buy(accessToken, krw.longValue());
 
-                log.info("* korbit buy  : {} {}", krw, result);
+                log.info("* korbit buy  : {} : {}", krw, result);
 
-                try {
-                    this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
-                } catch (final Exception e) {
-                    log.info("slack error : {}", e.getMessage());
-                }
+                //this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
             } else {
                 high = last;
                 low = last;
@@ -244,7 +231,6 @@ public class KorbitServiceImpl implements KorbitService {
         final Map balances = this.korbitRepository.balances(accessToken);
 
         Float krw = Float.parseFloat(((Map) balances.get("krw")).get("available").toString());
-        final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
         Map result = null;
 
@@ -256,13 +242,9 @@ public class KorbitServiceImpl implements KorbitService {
             // TODO 사자
             result = this.korbitRepository.buy(accessToken, krw.longValue());
 
-            log.info("* korbit buy  : {} {}", krw, result);
+            log.info("korbit buy  : {} : {}", krw, result);
 
-            try {
-                this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
-            } catch (final Exception e) {
-                log.info("slack error : {}", e.getMessage());
-            }
+            //this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
         }
 
         return result;
@@ -294,13 +276,9 @@ public class KorbitServiceImpl implements KorbitService {
             // TODO 팔자
             result = this.korbitRepository.sell(accessToken, btc);
 
-            log.info("* korbit sell : {} {}", btc, result);
+            log.info("korbit sell : {} : {}", btc, result);
 
-            try {
-                this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
-            } catch (final Exception e) {
-                log.info("slack error : {}", e.getMessage());
-            }
+            //this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
         }
 
         return result;

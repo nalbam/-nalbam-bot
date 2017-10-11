@@ -8,7 +8,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.Map;
 
 @Slf4j
@@ -31,15 +30,15 @@ public class TokenRepositoryImpl implements TokenRepository {
         final HttpHeaders headers = new HttpHeaders();
         headers.add("x-api-key", this.key);
 
-        final HttpEntity<Map> entity = new HttpEntity<>(headers);
-        final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-
         try {
+            final HttpEntity<Map> entity = new HttpEntity<>(headers);
+            final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
             final Map map = new ObjectMapper().readValue(response.getBody(), Map.class);
             return (Map) map.get("Item");
-        } catch (final IOException e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
+        } catch (final Exception e) {
+            log.info(e.getMessage());
+            //e.printStackTrace();
         }
         return null;
     }
@@ -59,9 +58,9 @@ public class TokenRepositoryImpl implements TokenRepository {
             final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
 
             new ObjectMapper().readValue(response.getBody(), Map.class);
-        } catch (final IOException e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
+        } catch (final Exception e) {
+            log.info(e.getMessage());
+            //e.printStackTrace();
         }
     }
 

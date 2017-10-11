@@ -2,12 +2,11 @@ package com.nalbam.bot.repository;
 
 import in.ashwanthkumar.slack.webhook.Slack;
 import in.ashwanthkumar.slack.webhook.SlackMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
+@Slf4j
 @Component
 public class SlackRepositoryImpl implements SlackRepository {
 
@@ -17,13 +16,12 @@ public class SlackRepositoryImpl implements SlackRepository {
     @Value("${nalbam.slack.channel}")
     private String channel;
 
-    @Async
     @Override
     public void send(final SlackMessage message) {
         try {
             new Slack(this.webhook).sendToChannel(this.channel).push(message);
-        } catch (final IOException e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+            log.info("slack send error {}", e.getMessage());
         }
     }
 

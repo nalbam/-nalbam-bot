@@ -10,10 +10,6 @@ public interface KorbitRepository {
 
     Map getTicker();
 
-    Map getOrderBook();
-
-    Map getTransactions();
-
     Map balances(String token);
 
     Map buy(String token, Long amount);
