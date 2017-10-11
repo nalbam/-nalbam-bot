@@ -20,10 +20,10 @@ nalbam:
     base: com.nalbam
   trade:
     buy:
-      per: 0.003
+      per: 0.002
       krw: 30000
     sell:
-      per: 0.003
+      per: 0.002
       btc: 0.01
   aws:
     api: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}

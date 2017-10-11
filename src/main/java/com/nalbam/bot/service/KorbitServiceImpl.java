@@ -158,36 +158,42 @@ public class KorbitServiceImpl implements KorbitService {
             }
         }
 
-        // 기준가 저장 (토큰)
-        saveToken(token, high, low);
-
         // 코빗 잔액 조회
         final Map balances = this.korbitRepository.balances(accessToken);
 
         Float krw = Float.parseFloat(((Map) balances.get("krw")).get("available").toString());
         Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
-        final Map result = null;
+        Map result = null;
 
         if (sell && btc > 0) {
             if (btc > this.sell_btc) {
                 btc = this.sell_btc;
+            } else {
+                high = last;
+                low = last;
             }
 
             // TODO 팔자
-            //result = this.korbitRepository.sell(accessToken, btc);
+            result = this.korbitRepository.sell(accessToken, btc);
 
             log.info("* korbit sell : {}", result);
         } else if (buy && krw > 0) {
             if (krw > this.buy_krw) {
                 krw = this.buy_krw;
+            } else {
+                high = last;
+                low = last;
             }
 
             // TODO 사자
-            //result = this.korbitRepository.buy(accessToken, krw.longValue());
+            result = this.korbitRepository.buy(accessToken, krw.longValue());
 
             log.info("* korbit buy  : {}", result);
         }
+
+        // 기준가 저장 (토큰)
+        saveToken(token, high, low);
 
         // 결과
         return result;
