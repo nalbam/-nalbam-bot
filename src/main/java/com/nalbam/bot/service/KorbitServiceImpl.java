@@ -75,8 +75,7 @@ public class KorbitServiceImpl implements KorbitService {
             }
 
             // 토큰 재발급
-            korbit = this.korbitRepository.getToken();
-            //korbit = this.korbitRepository.getToken(saved.get("refresh_token").toString());
+            korbit = this.korbitRepository.getToken(saved.get("refresh_token").toString());
         }
 
         if (korbit != null) {
