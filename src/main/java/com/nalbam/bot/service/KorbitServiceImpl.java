@@ -58,21 +58,9 @@ public class KorbitServiceImpl implements KorbitService {
             // 토큰 발급
             korbit = this.korbitRepository.getToken();
         } else {
-            if (saved.get("nonce") != null) {
-                nonce = Long.parseLong(saved.get("nonce").toString());
-            } else {
-                nonce = 0L;
-            }
-            if (saved.get("high") != null) {
-                high = Long.parseLong(saved.get("high").toString());
-            } else {
-                high = 0L;
-            }
-            if (saved.get("low") != null) {
-                low = Long.parseLong(saved.get("low").toString());
-            } else {
-                low = 0L;
-            }
+            nonce = Long.parseLong(saved.get("nonce").toString());
+            high = Long.parseLong(saved.get("high").toString());
+            low = Long.parseLong(saved.get("low").toString());
 
             // 토큰 재발급
             korbit = this.korbitRepository.getToken(saved.get("refresh_token").toString());
