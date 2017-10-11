@@ -113,7 +113,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
     }
 
     @Override
-    public Map buy(final String token, final Long amount) {
+    public Map buy(final String token, final Long amount, final Long nonce) {
         final String url = this.api + "/user/orders/buy";
 
         final HttpHeaders headers = new HttpHeaders();
@@ -122,6 +122,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         final MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("currency_pair", "btc_krw");
         params.add("type", "market");
+        params.add("nonce", nonce);
         params.add("fiat_amount", amount.toString());
 
         try {
@@ -138,7 +139,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
     }
 
     @Override
-    public Map sell(final String token, final Float amount) {
+    public Map sell(final String token, final Float amount, final Long nonce) {
         final String url = this.api + "/user/orders/sell";
 
         final HttpHeaders headers = new HttpHeaders();
@@ -147,6 +148,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         final MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("currency_pair", "btc_krw");
         params.add("type", "market");
+        params.add("nonce", nonce);
         params.add("coin_amount", amount.toString());
 
         try {

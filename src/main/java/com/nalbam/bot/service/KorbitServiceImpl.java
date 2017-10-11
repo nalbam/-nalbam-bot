@@ -46,16 +46,23 @@ public class KorbitServiceImpl implements KorbitService {
 
         final Map korbit;
 
+        final Long nonce;
         final Long high;
         final Long low;
 
         if (saved == null) {
+            nonce = 0L;
             high = 0L;
             low = 0L;
 
             // 토큰 발급
             korbit = this.korbitRepository.getToken();
         } else {
+            if (saved.get("nonce") != null) {
+                nonce = Long.parseLong(saved.get("nonce").toString());
+            } else {
+                nonce = 0L;
+            }
             if (saved.get("high") != null) {
                 high = Long.parseLong(saved.get("high").toString());
             } else {
@@ -73,7 +80,7 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         if (korbit != null) {
-            return saveToken(korbit, high, low);
+            return saveToken(korbit, nonce, high, low);
         }
 
         return null;
@@ -90,6 +97,7 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         final String accessToken = token.get("access_token").toString();
+        Long nonce = Long.parseLong(token.get("nonce").toString());
         Long high = Long.parseLong(token.get("high").toString());
         Long low = Long.parseLong(token.get("low").toString());
 
@@ -163,7 +171,7 @@ public class KorbitServiceImpl implements KorbitService {
                 }
 
                 // TODO 팔자
-                result = this.korbitRepository.sell(accessToken, btc);
+                result = this.korbitRepository.sell(accessToken, btc, nonce++);
 
                 log.info("* korbit sell : {}", btc);
                 log.info("* korbit sell : {}", result);
@@ -184,7 +192,7 @@ public class KorbitServiceImpl implements KorbitService {
                 }
 
                 // TODO 사자
-                result = this.korbitRepository.buy(accessToken, krw);
+                result = this.korbitRepository.buy(accessToken, krw, nonce++);
 
                 log.info("* korbit buy  : {}", krw);
                 log.info("* korbit buy  : {}", result);
@@ -197,7 +205,7 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         // 기준가 저장 (토큰)
-        saveToken(token, high, low);
+        saveToken(token, nonce, high, low);
 
         // 결과
         return result;
@@ -213,6 +221,7 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         final String accessToken = token.get("access_token").toString();
+        final Long nonce = Long.parseLong(token.get("nonce").toString());
 
         // 코빗 잔액 조회
         final Map balances = this.korbitRepository.balances(accessToken);
@@ -227,7 +236,7 @@ public class KorbitServiceImpl implements KorbitService {
             }
 
             // TODO 사자
-            result = this.korbitRepository.buy(accessToken, krw);
+            result = this.korbitRepository.buy(accessToken, krw, nonce);
 
             log.info("korbit buy : {}", krw);
             log.info("korbit buy : {}", result);
@@ -248,6 +257,7 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         final String accessToken = token.get("access_token").toString();
+        final Long nonce = Long.parseLong(token.get("nonce").toString());
 
         // 코빗 잔액 조회
         final Map balances = this.korbitRepository.balances(accessToken);
@@ -262,7 +272,7 @@ public class KorbitServiceImpl implements KorbitService {
             }
 
             // TODO 팔자
-            result = this.korbitRepository.sell(accessToken, btc);
+            result = this.korbitRepository.sell(accessToken, btc, nonce);
 
             log.info("korbit sell : {}", btc);
             log.info("korbit sell : {}", result);
@@ -273,13 +283,14 @@ public class KorbitServiceImpl implements KorbitService {
         return result;
     }
 
-    private Map saveToken(final Map token, final Long high, final Long low) {
+    private Map saveToken(final Map token, final Long nonce, final Long high, final Long low) {
         final Map<String, Object> map = new HashMap<>();
         map.put("id", this.username);
         map.put("token_type", token.get("token_type"));
         map.put("access_token", token.get("access_token"));
         map.put("expires_in", token.get("expires_in"));
         map.put("refresh_token", token.get("refresh_token"));
+        map.put("nonce", nonce);
         map.put("high", high);
         map.put("low", low);
 

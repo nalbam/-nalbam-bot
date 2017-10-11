@@ -12,8 +12,8 @@ public interface KorbitRepository {
 
     Map balances(String token);
 
-    Map buy(String token, Long amount);
+    Map buy(String token, Long amount, Long nonce);
 
-    Map sell(String token, Float amount);
+    Map sell(String token, Float amount, Long nonce);
 
 }
