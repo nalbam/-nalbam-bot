@@ -22,7 +22,7 @@ public class KorbitServiceImpl implements KorbitService {
     private Float buy_per;
 
     @Value("${nalbam.trade.buy.krw}")
-    private Float buy_krw;
+    private Long buy_krw;
 
     @Value("${nalbam.trade.sell.per}")
     private Float sell_per;
@@ -140,7 +140,7 @@ public class KorbitServiceImpl implements KorbitService {
         // 코빗 잔액 조회
         final Map balances = this.korbitRepository.balances(accessToken);
 
-        Float krw = Float.parseFloat(((Map) balances.get("krw")).get("available").toString());
+        Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
         Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
         if (sell || buy) {
@@ -180,7 +180,8 @@ public class KorbitServiceImpl implements KorbitService {
                 // TODO 팔자
                 result = this.korbitRepository.sell(accessToken, btc);
 
-                log.info("* korbit sell : {} : {}", btc, result);
+                log.info("* korbit sell : {}", btc);
+                log.info("* korbit sell : {}", result);
 
                 //this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
 
@@ -198,9 +199,10 @@ public class KorbitServiceImpl implements KorbitService {
                 }
 
                 // TODO 사자
-                result = this.korbitRepository.buy(accessToken, krw.longValue());
+                result = this.korbitRepository.buy(accessToken, krw);
 
-                log.info("* korbit buy  : {} : {}", krw, result);
+                log.info("* korbit buy  : {}", krw);
+                log.info("* korbit buy  : {}", result);
 
                 //this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
             } else {
@@ -230,7 +232,7 @@ public class KorbitServiceImpl implements KorbitService {
         // 코빗 잔액 조회
         final Map balances = this.korbitRepository.balances(accessToken);
 
-        Float krw = Float.parseFloat(((Map) balances.get("krw")).get("available").toString());
+        Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
 
         Map result = null;
 
@@ -240,9 +242,10 @@ public class KorbitServiceImpl implements KorbitService {
             }
 
             // TODO 사자
-            result = this.korbitRepository.buy(accessToken, krw.longValue());
+            result = this.korbitRepository.buy(accessToken, krw);
 
-            log.info("korbit buy  : {} : {}", krw, result);
+            log.info("korbit buy : {}", krw);
+            log.info("korbit buy : {}", result);
 
             //this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
         }
@@ -276,7 +279,8 @@ public class KorbitServiceImpl implements KorbitService {
             // TODO 팔자
             result = this.korbitRepository.sell(accessToken, btc);
 
-            log.info("korbit sell : {} : {}", btc, result);
+            log.info("korbit sell : {}", btc);
+            log.info("korbit sell : {}", result);
 
             //this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
         }
