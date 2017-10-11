@@ -23,14 +23,27 @@ public class KorbitRepositoryTests {
     @Autowired
     private KorbitRepository korbitRepository;
 
+    @Autowired
+    private TokenRepository tokenRepository;
+
     @Test
     public void token() throws Exception {
         log.debug("## korbit username : {}", this.username);
 
+        // get token from korbit
         final Map token = this.korbitRepository.getToken();
 
         log.debug("## korbit token : {}", token);
 
+        // set token to dynamo
+        this.tokenRepository.setToken(this.username, token);
+
+        // get token from dynamo
+        final Map saved = this.tokenRepository.getToken(this.username);
+
+        log.debug("## korbit saved : {}", saved);
+
+        // get balance from korbit
         final Map balances = this.korbitRepository.balances(token.get("access_token").toString());
 
         log.debug("## korbit balances : {}", balances);

@@ -29,6 +29,8 @@ nalbam:
       krw: 5000
     init:
       krw: 100000
+  aws:
+    key: ${AWS_API_KEY:AWS_API_KEY}
   korbit:
     client_id: ${KORBIT_ACCESS_KEY:KORBIT_ACCESS_KEY}
     client_secret: ${KORBIT_SECRET_KEY:KORBIT_SECRET_KEY}

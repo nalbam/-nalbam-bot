@@ -118,7 +118,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token);
 
-        final HttpEntity<MultiValueMap> entity = new HttpEntity<>(headers);
+        final HttpEntity<Map> entity = new HttpEntity<>(headers);
         final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
         try {
