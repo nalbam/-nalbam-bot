@@ -6,6 +6,8 @@ public interface KorbitRepository {
 
     Map getToken();
 
+    Map getToken(String token);
+
     Map getTicker();
 
     Map getOrderBook();

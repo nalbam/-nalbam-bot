@@ -18,17 +18,13 @@ nalbam:
   app:
     name: bot
     base: com.nalbam
-  cache:
-    expire: 600
   trade:
     buy:
       per: 0.03
-      krw: 5000
+      krw: 30000
     sell:
       per: 0.03
-      krw: 5000
-    init:
-      krw: 100000
+      btc: 0.01
   aws:
     api: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod/token}
     key: ${AWS_API_KEY:AWS_API_KEY}

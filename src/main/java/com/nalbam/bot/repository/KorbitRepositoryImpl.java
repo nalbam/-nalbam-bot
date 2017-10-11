@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -43,6 +44,11 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map getToken() {
+        return getToken(null);
+    }
+
+    @Override
+    public Map getToken(final String token) {
         final String url = this.api + "/oauth2/access_token";
 
         final HttpHeaders headers = new HttpHeaders();
@@ -50,9 +56,15 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("client_id", this.client_id);
         params.add("client_secret", this.client_secret);
-        params.add("grant_type", this.grant_type);
-        params.add("username", this.username);
-        params.add("password", this.password);
+
+        if (StringUtils.isEmpty(token)) {
+            params.add("grant_type", "password");
+            params.add("username", this.username);
+            params.add("password", this.password);
+        } else {
+            params.add("grant_type", "refresh_token");
+            params.add("refresh_token", token);
+        }
 
         final HttpEntity<MultiValueMap> entity = new HttpEntity<>(params, headers);
         final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
@@ -135,7 +147,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map balances(final String token) {
-        final String url = "https://api.korbit.co.kr/v1/user/balances";
+        final String url = this.api + "/user/balances";
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token);
@@ -154,7 +166,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map buy(final String token, final Long amount) {
-        final String url = "https://api.korbit.co.kr/v1/user/orders/buy";
+        final String url = this.api + "/user/orders/buy";
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token);
@@ -178,7 +190,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map sell(final String token, final Long amount) {
-        final String url = "https://api.korbit.co.kr/v1/user/orders/sell";
+        final String url = this.api + "/user/orders/sell";
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token);

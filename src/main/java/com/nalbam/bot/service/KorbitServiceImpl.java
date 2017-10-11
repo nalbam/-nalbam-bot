@@ -1,8 +1,10 @@
 package com.nalbam.bot.service;
 
 import com.nalbam.bot.repository.KorbitRepository;
+import com.nalbam.bot.repository.TokenRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -11,12 +13,30 @@ import java.util.Map;
 @Service
 public class KorbitServiceImpl implements KorbitService {
 
+    @Value("${nalbam.korbit.username}")
+    private String username;
+
     @Autowired
     private KorbitRepository korbitRepository;
 
+    @Autowired
+    private TokenRepository tokenRepository;
+
     @Override
     public Map getToken() {
-        return this.korbitRepository.getToken();
+        Map token = this.tokenRepository.getToken(this.username);
+
+        if (token == null) {
+            token = this.korbitRepository.getToken();
+        } else {
+            token = this.korbitRepository.getToken(token.get("refresh_token").toString());
+        }
+
+        if (token != null) {
+            this.tokenRepository.setToken(this.username, token);
+        }
+
+        return token;
     }
 
     @Override
