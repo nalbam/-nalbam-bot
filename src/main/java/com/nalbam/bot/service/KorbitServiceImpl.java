@@ -136,7 +136,7 @@ public class KorbitServiceImpl implements KorbitService {
         log.info("* korbit -    : {} ", low_high);
         log.info("* korbit --   : {} ", low);
 
-        if (high == 0L || high <= last) {
+        if (high == 0 || high <= last) {
             high = last;
         } else {
             // 팔자
@@ -147,7 +147,7 @@ public class KorbitServiceImpl implements KorbitService {
             }
         }
 
-        if (low == 0L || low >= last) {
+        if (low == 0 || low >= last) {
             low = last;
         } else {
             // 사자
@@ -163,6 +163,9 @@ public class KorbitServiceImpl implements KorbitService {
 
         Float krw = Float.parseFloat(((Map) balances.get("krw")).get("available").toString());
         Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
+
+        log.info("* korbit krw : {} ", krw);
+        log.info("* korbit btc : {} ", btc);
 
         Map result = null;
 
