@@ -39,22 +39,6 @@ public class KorbitServiceImpl implements KorbitService {
     @Autowired
     private SlackRepository slackRepository;
 
-    private Map saveToken(final Map token, final Long high, final Long low) {
-        final Map<String, Object> map = new HashMap<>();
-        map.put("id", this.username);
-        map.put("token_type", token.get("token_type"));
-        map.put("access_token", token.get("access_token"));
-        map.put("expires_in", token.get("expires_in"));
-        map.put("refresh_token", token.get("refresh_token"));
-        map.put("high", high);
-        map.put("low", low);
-
-        // 토큰 저장
-        this.tokenRepository.setToken(map);
-
-        return map;
-    }
-
     @Override
     public Map token() {
         // 저장된 토큰 조회
@@ -101,6 +85,7 @@ public class KorbitServiceImpl implements KorbitService {
         final Map token = this.tokenRepository.getToken(this.username);
 
         if (token == null) {
+            log.info("* korbit analyzer : token is null");
             return null;
         }
 
@@ -286,6 +271,22 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         return result;
+    }
+
+    private Map saveToken(final Map token, final Long high, final Long low) {
+        final Map<String, Object> map = new HashMap<>();
+        map.put("id", this.username);
+        map.put("token_type", token.get("token_type"));
+        map.put("access_token", token.get("access_token"));
+        map.put("expires_in", token.get("expires_in"));
+        map.put("refresh_token", token.get("refresh_token"));
+        map.put("high", high);
+        map.put("low", low);
+
+        // 토큰 저장
+        this.tokenRepository.setToken(map);
+
+        return map;
     }
 
 }
