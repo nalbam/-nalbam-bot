@@ -127,25 +127,6 @@ public class KorbitRepositoryImpl implements KorbitRepository {
     }
 
     @Override
-    public Map accounts(final String token) {
-        final String url = this.api + "/user/accounts";
-
-        final HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + token);
-
-        final HttpEntity<Map> entity = new HttpEntity<>(headers);
-        final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-
-        try {
-            return new ObjectMapper().readValue(response.getBody(), Map.class);
-        } catch (final IOException e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
     public Map balances(final String token) {
         final String url = this.api + "/user/balances";
 
@@ -189,7 +170,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
     }
 
     @Override
-    public Map sell(final String token, final Long amount) {
+    public Map sell(final String token, final Float amount) {
         final String url = this.api + "/user/orders/sell";
 
         final HttpHeaders headers = new HttpHeaders();

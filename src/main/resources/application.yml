@@ -20,13 +20,13 @@ nalbam:
     base: com.nalbam
   trade:
     buy:
-      per: 0.03
+      per: 0.003
       krw: 30000
     sell:
-      per: 0.03
+      per: 0.003
       btc: 0.01
   aws:
-    api: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod/token}
+    api: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
     key: ${AWS_API_KEY:AWS_API_KEY}
   korbit:
     api: ${KORBIT_API_URL:https://api.korbit.co.kr/v1}
@@ -35,3 +35,6 @@ nalbam:
     grant_type: ${KORBIT_GRANT_TYPE:password}
     username: ${KORBIT_USERNAME:username}
     password: ${KORBIT_PASSWORD:password}
+  slack:
+    webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/aaaa/bbbb/cccc}
+    channel: ${SLACK_CHANNEL:channel}

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -27,7 +26,7 @@ public class TokenRepositoryImpl implements TokenRepository {
 
     @Override
     public Map getToken(final String id) {
-        final String url = this.api + "/" + id;
+        final String url = this.api + "/token/" + id;
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("x-api-key", this.key);
@@ -46,19 +45,12 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
 
     @Override
-    public void setToken(final String id, final Map token) {
-        final String url = this.api;
+    public void setToken(final Map params) {
+        final String url = this.api + "/token";
 
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("x-api-key", this.key);
-
-        final Map<String, Object> params = new HashMap<>();
-        params.put("id", id);
-        params.put("token_type", token.get("token_type"));
-        params.put("access_token", token.get("access_token"));
-        params.put("expires_in", token.get("expires_in"));
-        params.put("refresh_token", token.get("refresh_token"));
 
         try {
             final String json = new ObjectMapper().writeValueAsString(params);

@@ -43,6 +43,13 @@
             <version>${netty.version}</version>
         </dependency>
 
+        <!-- slack -->
+        <dependency>
+            <groupId>in.ashwanthkumar</groupId>
+            <artifactId>slack-java-webhook</artifactId>
+            <version>0.0.8</version>
+        </dependency>
+
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

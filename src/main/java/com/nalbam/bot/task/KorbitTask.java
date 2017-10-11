@@ -19,11 +19,20 @@ public class KorbitTask {
     @Autowired
     private KorbitService korbitService;
 
+    // 10분 마다
     @Scheduled(fixedRate = 600000)
-    public void analyzer() {
-        final Map token = this.korbitService.getToken();
+    public void token() {
+        final Map token = this.korbitService.token();
 
-        log.info("* analyzer token : {}", token);
+        log.info("# korbit task token : {}", token);
+    }
+
+    // 1분 마다
+    @Scheduled(fixedRate = 60000)
+    public void analyzer() {
+        final Map analyzer = this.korbitService.analyzer();
+
+        log.info("# korbit task analyzer : {}", analyzer);
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -28,18 +29,31 @@ public class KorbitRepositoryTests {
 
     @Test
     public void token() throws Exception {
-        log.debug("## korbit username : {}", this.username);
+        final String username = "test@" + this.username;
+
+        log.debug("## korbit username : {}", username);
 
         // get token from korbit
         final Map token = this.korbitRepository.getToken();
 
         log.debug("## korbit token : {}", token);
 
-        // set token to dynamo
-        this.tokenRepository.setToken(this.username, token);
+        final Map<String, Object> map = new HashMap<>();
+        map.put("id", username);
+        map.put("token_type", token.get("token_type"));
+        map.put("access_token", token.get("access_token"));
+        map.put("expires_in", token.get("expires_in"));
+        map.put("refresh_token", token.get("refresh_token"));
+        map.put("high", 0);
+        map.put("low", 0);
 
-        // get token from dynamo
-        final Map saved = this.tokenRepository.getToken(this.username);
+        // set token to aws
+        this.tokenRepository.setToken(map);
+
+        log.debug("## korbit save : {}", map);
+
+        // get token from aws
+        final Map saved = this.tokenRepository.getToken(username);
 
         log.debug("## korbit saved : {}", saved);
 

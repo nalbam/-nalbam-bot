@@ -6,6 +6,6 @@ public interface TokenRepository {
 
     Map getToken(String id);
 
-    void setToken(String id, Map token);
+    void setToken(Map token);
 
 }
