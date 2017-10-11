@@ -180,7 +180,7 @@ public class KorbitServiceImpl implements KorbitService {
             // TODO 팔자
             result = this.korbitRepository.sell(accessToken, btc);
 
-            log.info("* korbit sell : {}", result);
+            log.info("* korbit sell : {} {}", btc, result);
         } else if (buy && krw > 0) {
             if (krw > this.buy_krw) {
                 krw = this.buy_krw;
@@ -192,7 +192,7 @@ public class KorbitServiceImpl implements KorbitService {
             // TODO 사자
             result = this.korbitRepository.buy(accessToken, krw.longValue());
 
-            log.info("* korbit buy  : {}", result);
+            log.info("* korbit buy  : {} {}", krw, result);
         }
 
         // 기준가 저장 (토큰)

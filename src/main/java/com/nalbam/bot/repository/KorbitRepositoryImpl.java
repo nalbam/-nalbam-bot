@@ -152,10 +152,10 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token);
 
-        final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("currency_pair", "btc_krw");
         params.add("type", "market");
-        params.add("fiat_amount", amount.toString());
+        params.add("fiat_amount", amount);
 
         final HttpEntity<MultiValueMap> entity = new HttpEntity<>(params, headers);
         final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
@@ -176,10 +176,10 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token);
 
-        final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("currency_pair", "btc_krw");
         params.add("type", "market");
-        params.add("coin_amount", amount.toString());
+        params.add("coin_amount", amount);
 
         final HttpEntity<MultiValueMap> entity = new HttpEntity<>(params, headers);
         final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);

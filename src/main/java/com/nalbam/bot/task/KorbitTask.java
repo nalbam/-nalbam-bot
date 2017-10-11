@@ -28,7 +28,7 @@ public class KorbitTask {
 
     @Scheduled(fixedRate = 60000)
     public void analyzer() {
-        log.info("# korbit --------------------------------------------------");
+        log.info("# korbit ----------------------------");
 
         final Map analyzer = this.korbitService.analyzer();
 
