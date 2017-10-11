@@ -37,4 +37,4 @@ nalbam:
     password: ${KORBIT_PASSWORD:password}
   slack:
     webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/aaaa/bbbb/cccc}
-    channel: ${SLACK_CHANNEL:channel}
+    channel: ${SLACK_CHANNEL:sandbox}
