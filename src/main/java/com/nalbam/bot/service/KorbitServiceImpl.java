@@ -181,6 +181,12 @@ public class KorbitServiceImpl implements KorbitService {
             log.info("* korbit btc  : {} ", btc);
 
             log.info("* korbit ----------------------------");
+
+            try {
+                this.slackRepository.send(new SlackMessage().quote("korbit").text(" sell " + sell).text(" buy " + buy));
+            } catch (final Exception e) {
+                log.info("slack error : {}", e.getMessage());
+            }
         }
 
         Map result = null;
