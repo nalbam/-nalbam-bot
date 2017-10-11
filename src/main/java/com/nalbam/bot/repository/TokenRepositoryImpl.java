@@ -16,6 +16,9 @@ import java.util.Map;
 @Component
 public class TokenRepositoryImpl implements TokenRepository {
 
+    @Value("${nalbam.aws.api}")
+    private String api;
+
     @Value("${nalbam.aws.key}")
     private String key;
 
@@ -24,7 +27,7 @@ public class TokenRepositoryImpl implements TokenRepository {
 
     @Override
     public Map getToken(final String id) {
-        final String url = "https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod/token/" + id;
+        final String url = this.api + "/" + id;
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("x-api-key", this.key);
@@ -44,7 +47,7 @@ public class TokenRepositoryImpl implements TokenRepository {
 
     @Override
     public void setToken(final String id, final Map token) {
-        final String url = "https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod/token";
+        final String url = this.api;
 
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

@@ -30,8 +30,10 @@ nalbam:
     init:
       krw: 100000
   aws:
+    api: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod/token}
     key: ${AWS_API_KEY:AWS_API_KEY}
   korbit:
+    api: ${KORBIT_API_URL:https://api.korbit.co.kr/v1}
     client_id: ${KORBIT_ACCESS_KEY:KORBIT_ACCESS_KEY}
     client_secret: ${KORBIT_SECRET_KEY:KORBIT_SECRET_KEY}
     grant_type: ${KORBIT_GRANT_TYPE:password}

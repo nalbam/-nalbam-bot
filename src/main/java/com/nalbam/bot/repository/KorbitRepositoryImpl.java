@@ -20,6 +20,9 @@ import java.util.Map;
 @Component
 public class KorbitRepositoryImpl implements KorbitRepository {
 
+    @Value("${nalbam.korbit.api}")
+    private String api;
+
     @Value("${nalbam.korbit.client_id}")
     private String client_id;
 
@@ -40,7 +43,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map getToken() {
-        final String url = "https://api.korbit.co.kr/v1/oauth2/access_token";
+        final String url = this.api + "/oauth2/access_token";
 
         final HttpHeaders headers = new HttpHeaders();
 
@@ -65,7 +68,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map getTicker() {
-        final String url = "https://api.korbit.co.kr/v1/ticker/detailed";
+        final String url = this.api + "/ticker/detailed";
 
         final HttpEntity entity = new HttpEntity<>(new HttpHeaders());
         final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
@@ -81,7 +84,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map getOrderBook() {
-        final String url = "https://api.korbit.co.kr/v1/orderbook";
+        final String url = this.api + "/orderbook";
 
         final HttpEntity entity = new HttpEntity<>(new HttpHeaders());
         final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
@@ -97,7 +100,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map getTransactions() {
-        final String url = "https://api.korbit.co.kr/v1/transactions";
+        final String url = this.api + "/transactions";
 
         final HttpEntity entity = new HttpEntity<>(new HttpHeaders());
         final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
@@ -113,7 +116,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map accounts(final String token) {
-        final String url = "https://api.korbit.co.kr/v1/user/accounts";
+        final String url = this.api + "/user/accounts";
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + token);
