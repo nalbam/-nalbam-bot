@@ -40,21 +40,6 @@ public class KorbitServiceImpl implements KorbitService {
     @Autowired
     private SlackRepository slackRepository;
 
-    @Override
-    public Map getTicker() {
-        return this.korbitRepository.getTicker();
-    }
-
-    @Override
-    public Map getOrderBook() {
-        return this.korbitRepository.getOrderBook();
-    }
-
-    @Override
-    public Map getTransactions() {
-        return this.korbitRepository.getTransactions();
-    }
-
     private Map saveToken(final Map token, final Long high, final Long low) {
         final Map<String, Object> map = new HashMap<>();
         map.put("id", this.username);
@@ -241,6 +226,83 @@ public class KorbitServiceImpl implements KorbitService {
         saveToken(token, high, low);
 
         // 결과
+        return result;
+    }
+
+    @Override
+    public Map buy() {
+        // 코빗 토큰 조회
+        final Map token = this.tokenRepository.getToken(this.username);
+
+        if (token == null) {
+            return null;
+        }
+
+        final String accessToken = token.get("access_token").toString();
+
+        // 코빗 잔액 조회
+        final Map balances = this.korbitRepository.balances(accessToken);
+
+        Float krw = Float.parseFloat(((Map) balances.get("krw")).get("available").toString());
+        final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
+
+        Map result = null;
+
+        if (krw > 0) {
+            if (krw > this.buy_krw) {
+                krw = this.buy_krw;
+            }
+
+            // TODO 사자
+            result = this.korbitRepository.buy(accessToken, krw.longValue());
+
+            log.info("* korbit buy  : {} {}", krw, result);
+
+            try {
+                this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
+            } catch (final Exception e) {
+                log.info("slack error : {}", e.getMessage());
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public Map sell() {
+        // 코빗 토큰 조회
+        final Map token = this.tokenRepository.getToken(this.username);
+
+        if (token == null) {
+            return null;
+        }
+
+        final String accessToken = token.get("access_token").toString();
+
+        // 코빗 잔액 조회
+        final Map balances = this.korbitRepository.balances(accessToken);
+
+        Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
+
+        Map result = null;
+
+        if (btc > 0) {
+            if (btc > this.sell_btc) {
+                btc = this.sell_btc;
+            }
+
+            // TODO 팔자
+            result = this.korbitRepository.sell(accessToken, btc);
+
+            log.info("* korbit sell : {} {}", btc, result);
+
+            try {
+                this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
+            } catch (final Exception e) {
+                log.info("slack error : {}", e.getMessage());
+            }
+        }
+
         return result;
     }
 

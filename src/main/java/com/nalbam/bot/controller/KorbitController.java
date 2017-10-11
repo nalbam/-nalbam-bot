@@ -19,19 +19,14 @@ public class KorbitController {
     @Autowired
     private KorbitService korbitService;
 
-    @GetMapping("/ticker")
-    public Map ticker() {
-        return this.korbitService.getTicker();
+    @GetMapping("/buy")
+    public Map buy() {
+        return this.korbitService.buy();
     }
 
-    @GetMapping("/orderbook")
-    public Map orderbook() {
-        return this.korbitService.getOrderBook();
-    }
-
-    @GetMapping("/transactions")
-    public Map transactions() {
-        return this.korbitService.getTransactions();
+    @GetMapping("/sell")
+    public Map sell() {
+        return this.korbitService.sell();
     }
 
 }

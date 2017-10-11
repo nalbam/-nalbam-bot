@@ -4,14 +4,12 @@ import java.util.Map;
 
 public interface KorbitService {
 
-    Map getTicker();
-
-    Map getOrderBook();
-
-    Map getTransactions();
-
     Map token();
 
     Map analyzer();
+
+    Map buy();
+
+    Map sell();
 
 }
