@@ -1,18 +1,22 @@
 package com.nalbam.bot.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class KorbitRepositoryImpl implements KorbitRepository {
 
@@ -39,7 +43,6 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         final String url = "https://api.korbit.co.kr/v1/oauth2/access_token";
 
         final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "x-www-form-urlencoded", Charset.forName("UTF-8")));
 
         final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("client_id", this.client_id);
@@ -54,6 +57,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -69,6 +73,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -84,6 +89,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -99,6 +105,93 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Map accounts(final String token) {
+        final String url = "https://api.korbit.co.kr/v1/user/accounts";
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token);
+
+        final HttpEntity<MultiValueMap> entity = new HttpEntity<>(headers);
+        final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
+        try {
+            return new ObjectMapper().readValue(response.getBody(), Map.class);
+        } catch (final IOException e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Map balances(final String token) {
+        final String url = "https://api.korbit.co.kr/v1/user/balances";
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token);
+
+        final HttpEntity<MultiValueMap> entity = new HttpEntity<>(headers);
+        final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
+        try {
+            return new ObjectMapper().readValue(response.getBody(), Map.class);
+        } catch (final IOException e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Map buy(final String token, final Long amount) {
+        final String url = "https://api.korbit.co.kr/v1/user/orders/buy";
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token);
+
+        final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("currency_pair", "btc_krw");
+        params.add("type", "market");
+        params.add("fiat_amount", amount.toString());
+
+        final HttpEntity<MultiValueMap> entity = new HttpEntity<>(params, headers);
+        final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+
+        try {
+            return new ObjectMapper().readValue(response.getBody(), Map.class);
+        } catch (final IOException e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Map sell(final String token, final Long amount) {
+        final String url = "https://api.korbit.co.kr/v1/user/orders/sell";
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token);
+
+        final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("currency_pair", "btc_krw");
+        params.add("type", "market");
+        params.add("coin_amount", amount.toString());
+
+        final HttpEntity<MultiValueMap> entity = new HttpEntity<>(params, headers);
+        final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+
+        try {
+            return new ObjectMapper().readValue(response.getBody(), Map.class);
+        } catch (final IOException e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         }
         return null;

@@ -34,4 +34,24 @@ public class KorbitServiceImpl implements KorbitService {
         return this.korbitRepository.getTransactions();
     }
 
+    @Override
+    public Map accounts(final String token) {
+        return this.korbitRepository.accounts(token);
+    }
+
+    @Override
+    public Map balances(final String token) {
+        return this.korbitRepository.balances(token);
+    }
+
+    @Override
+    public Map buy(final String token, final Long amount) {
+        return this.korbitRepository.buy(token, amount);
+    }
+
+    @Override
+    public Map sell(final String token, final Long amount) {
+        return this.korbitRepository.sell(token, amount);
+    }
+
 }

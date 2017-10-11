@@ -12,4 +12,12 @@ public interface KorbitService {
 
     Map getTransactions();
 
+    Map accounts(String token);
+
+    Map balances(String token);
+
+    Map buy(String token, Long amount);
+
+    Map sell(String token, Long amount);
+
 }

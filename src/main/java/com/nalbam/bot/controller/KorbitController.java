@@ -13,16 +13,11 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/korbit")
-@Api(value = "token", description = "토큰")
-public class TokenController {
+@Api(value = "korbit", description = "코빗")
+public class KorbitController {
 
     @Autowired
     private KorbitService korbitService;
-
-    @GetMapping("/token")
-    public Map token() {
-        return this.korbitService.getToken();
-    }
 
     @GetMapping("/ticker")
     public Map ticker() {
