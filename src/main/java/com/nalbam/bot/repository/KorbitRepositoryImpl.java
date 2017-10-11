@@ -72,7 +72,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
-            log.error(e.getMessage());
+            log.info(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -80,7 +80,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
 
     @Override
     public Map getTicker() {
-        final String url = this.api + "/ticker/detailed";
+        final String url = this.api + "/ticker";
 
         final HttpEntity entity = new HttpEntity<>(new HttpHeaders());
         final ResponseEntity<String> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
@@ -88,7 +88,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
-            log.error(e.getMessage());
+            log.info(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -104,7 +104,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
-            log.error(e.getMessage());
+            log.info(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -120,7 +120,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
-            log.error(e.getMessage());
+            log.info(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -139,7 +139,7 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
-            log.error(e.getMessage());
+            log.info(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -163,8 +163,8 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
-            log.error("* error buy  {} ", params);
-            log.error(e.getMessage());
+            log.info("* error buy  {} ", params);
+            log.info(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -188,8 +188,8 @@ public class KorbitRepositoryImpl implements KorbitRepository {
         try {
             return new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final IOException e) {
-            log.error("* error sell {} ", params);
-            log.error(e.getMessage());
+            log.info("* error sell {} ", params);
+            log.info(e.getMessage());
             e.printStackTrace();
         }
         return null;
