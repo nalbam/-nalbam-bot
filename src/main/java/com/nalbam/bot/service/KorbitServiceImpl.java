@@ -3,6 +3,7 @@ package com.nalbam.bot.service;
 import com.nalbam.bot.repository.KorbitRepository;
 import com.nalbam.bot.repository.SlackRepository;
 import com.nalbam.bot.repository.TokenRepository;
+import in.ashwanthkumar.slack.webhook.SlackMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -196,6 +197,28 @@ public class KorbitServiceImpl implements KorbitService {
 
         // 결과
         return result;
+    }
+
+    @Override
+    public Map balances() {
+        // 코빗 토큰 조회
+        final Map token = this.tokenRepository.getToken(this.username);
+
+        if (token == null) {
+            return null;
+        }
+
+        final String accessToken = token.get("access_token").toString();
+
+        // 코빗 잔액 조회
+        final Map balances = this.korbitRepository.balances(accessToken);
+
+        final Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
+        final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
+
+        this.slackRepository.send(new SlackMessage().quote("krw " + krw).quote("btc " + btc));
+
+        return balances;
     }
 
     @Override

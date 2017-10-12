@@ -20,19 +20,27 @@ public class KorbitTask {
     private KorbitService korbitService;
 
     // 30분
-    @Scheduled(fixedRate = 1800000)
+    @Scheduled(fixedRate = 1802000)
     public void token() {
-        final Map token = this.korbitService.token();
+        final Map result = this.korbitService.token();
 
-        log.info("# korbit task token : {}", token);
+        log.info("# korbit task token : {}", result);
     }
 
     // 3분
     @Scheduled(fixedRate = 180000)
     public void analyzer() {
-        final Map analyzer = this.korbitService.analyzer();
+        final Map result = this.korbitService.analyzer();
 
-        log.info("# korbit task analyzer : {}", analyzer);
+        log.info("# korbit task analyzer : {}", result);
+    }
+
+    // 60분
+    @Scheduled(fixedRate = 3600000)
+    public void balances() {
+        final Map result = this.korbitService.balances();
+
+        log.info("# korbit task balances : {}", result);
     }
 
 }
