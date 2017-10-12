@@ -19,17 +19,23 @@ public class KorbitServiceImpl implements KorbitService {
     @Value("${nalbam.korbit.username}")
     private String username;
 
+    @Value("${nalbam.trade.sell.per}")
+    private Float sell_per;
+
+    @Value("${nalbam.trade.sell.btc}")
+    private Float sell_btc;
+
+    @Value("${nalbam.trade.sell.sgn}")
+    private Long sell_sgn;
+
     @Value("${nalbam.trade.buy.per}")
     private Float buy_per;
 
     @Value("${nalbam.trade.buy.krw}")
     private Long buy_krw;
 
-    @Value("${nalbam.trade.sell.per}")
-    private Float sell_per;
-
-    @Value("${nalbam.trade.sell.btc}")
-    private Float sell_btc;
+    @Value("${nalbam.trade.buy.sgn}")
+    private Long buy_sgn;
 
     @Autowired
     private KorbitRepository korbitRepository;
@@ -147,7 +153,7 @@ public class KorbitServiceImpl implements KorbitService {
         final Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
         final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
-        if (sell > 3 || buy > 3) {
+        if (sell > this.sell_sgn || buy > this.buy_sgn) {
             log.info("* korbit ----------------------------");
             log.info("* korbit ++   : {} ", high);
             log.info("* korbit +    : {} ", high_low);
@@ -196,13 +202,13 @@ public class KorbitServiceImpl implements KorbitService {
 
         Map result = null;
 
-        if (sell > 3 || buy > 3) {
+        if (sell > this.sell_sgn || buy > this.buy_sgn) {
             final String accessToken = token.get("access_token").toString();
 
             // 코빗 잔액 조회
             final Map balances = this.korbitRepository.balances(accessToken);
 
-            if (sell > buy) {
+            if (sell >= buy) {
                 result = sell(token, balances);
             } else {
                 result = buy(token, balances);

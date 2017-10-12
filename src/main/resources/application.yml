@@ -19,12 +19,14 @@ nalbam:
     name: bot
     base: com.nalbam
   trade:
-    buy:
-      per: 0.003
-      krw: 50000
     sell:
       per: 0.003
       btc: 0.01
+      sgn: 3
+    buy:
+      per: 0.003
+      krw: 50000
+      sgn: 3
   aws:
     api: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
     key: ${AWS_API_KEY:AWS_API_KEY}
@@ -35,5 +37,5 @@ nalbam:
     username: ${KORBIT_USERNAME:username}
     password: ${KORBIT_PASSWORD:password}
   slack:
-    webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/aaaa/bbbb/cccc}
+    webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/a/b/c}
     channel: ${SLACK_CHANNEL:sandbox}
