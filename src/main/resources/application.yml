@@ -19,10 +19,12 @@ nalbam:
     sell:
       per: 0.003
       btc: 0.01
+      min: 0.01
       sgn: 3
     buy:
       per: 0.003
       krw: 50000
+      min: 500
       sgn: 3
   aws:
     api: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
