@@ -21,7 +21,7 @@ nalbam:
   trade:
     buy:
       per: 0.002
-      krw: 30000
+      krw: 50000
     sell:
       per: 0.002
       btc: 0.01
