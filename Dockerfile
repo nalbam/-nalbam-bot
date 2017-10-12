@@ -8,7 +8,6 @@ RUN curl -s toast.sh/install | bash
 RUN ~/toaster/toast.sh config bot local nalbam
 RUN ~/toaster/toast.sh init eb
 RUN ~/toaster/toast.sh init java
-RUN ~/toaster/toast.sh init redis
 
 ENV PATH "/usr/local/java/bin:${PATH}"
 
