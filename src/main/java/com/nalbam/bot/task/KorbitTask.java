@@ -19,18 +19,25 @@ public class KorbitTask {
     @Autowired
     private KorbitService korbitService;
 
-    @Scheduled(cron = "30 */30 * * * *")
+    @Scheduled(cron = "00 */30 * * * *")
     public void token() {
         final Map result = this.korbitService.token();
 
         log.info("# korbit task token : {}", result);
     }
 
-    @Scheduled(cron = "15 */15 * * * *")
+    @Scheduled(cron = "15 */3 * * * *")
     public void analyzer() {
         final Map result = this.korbitService.analyzer();
 
         log.info("# korbit task analyzer : {}", result);
+    }
+
+    @Scheduled(cron = "30 */15 * * * *")
+    public void trade() {
+        final Map result = this.korbitService.trade();
+
+        log.info("# korbit task trade : {}", result);
     }
 
     @Scheduled(cron = "45 */10 * * * *")

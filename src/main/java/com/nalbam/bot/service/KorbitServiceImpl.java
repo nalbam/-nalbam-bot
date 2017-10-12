@@ -4,7 +4,6 @@ import com.nalbam.bot.repository.KorbitRepository;
 import com.nalbam.bot.repository.SlackRepository;
 import com.nalbam.bot.repository.TokenRepository;
 import in.ashwanthkumar.slack.webhook.SlackAttachment;
-import in.ashwanthkumar.slack.webhook.SlackMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,30 +45,33 @@ public class KorbitServiceImpl implements KorbitService {
         // 저장된 토큰 조회
         final Map saved = this.tokenRepository.getToken(this.username);
 
-        final Map korbit;
-
-        final Long nonce;
-        final Long high;
-        final Long low;
+        final Map token;
+        final Map<String, Object> korbit = new HashMap<>();
 
         if (saved == null) {
-            nonce = 0L;
-            high = 0L;
-            low = 0L;
-
             // 토큰 발급
-            korbit = this.korbitRepository.getToken();
-        } else {
-            nonce = Long.parseLong(saved.get("nonce").toString());
-            high = Long.parseLong(saved.get("high").toString());
-            low = Long.parseLong(saved.get("low").toString());
+            token = this.korbitRepository.getToken();
 
+            korbit.put("nonce", 0L);
+            korbit.put("last", 0L);
+            korbit.put("high", 0L);
+            korbit.put("low", 0L);
+            korbit.put("sell", 0L);
+            korbit.put("buy", 0L);
+        } else {
             // 토큰 재발급
-            korbit = this.korbitRepository.getToken(saved.get("refresh_token").toString());
+            token = this.korbitRepository.getToken(saved.get("refresh_token").toString());
+
+            korbit.put("nonce", saved.get("nonce"));
+            korbit.put("last", saved.get("last"));
+            korbit.put("high", saved.get("high"));
+            korbit.put("low", saved.get("low"));
+            korbit.put("sell", saved.get("sell"));
+            korbit.put("buy", saved.get("buy"));
         }
 
-        if (korbit != null) {
-            return saveToken(korbit, nonce, high, low);
+        if (token != null) {
+            return saveToken(token, korbit);
         }
 
         return null;
@@ -85,9 +87,15 @@ public class KorbitServiceImpl implements KorbitService {
             return null;
         }
 
-        final Long nonce = Long.parseLong(token.get("nonce").toString());
+        final Map<String, Object> korbit = new HashMap<>();
+        korbit.put("nonce", token.get("nonce"));
+        korbit.put("last", token.get("last"));
+        korbit.put("high", 0L);
+        korbit.put("low", 0L);
+        korbit.put("sell", 0L);
+        korbit.put("buy", 0L);
 
-        return saveToken(token, nonce, 0L, 0L);
+        return saveToken(token, korbit);
     }
 
     @Override
@@ -101,12 +109,11 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         final String accessToken = token.get("access_token").toString();
-        Long nonce = Long.parseLong(token.get("nonce").toString());
+        final Long nonce = Long.parseLong(token.get("nonce").toString());
         Long high = Long.parseLong(token.get("high").toString());
         Long low = Long.parseLong(token.get("low").toString());
-
-        boolean buy = false;
-        boolean sell = false;
+        Long sell = Long.parseLong(token.get("sell").toString());
+        Long buy = Long.parseLong(token.get("buy").toString());
 
         // 현재 시세 조회
         final Map ticker = this.korbitRepository.getTicker();
@@ -121,7 +128,7 @@ public class KorbitServiceImpl implements KorbitService {
         } else {
             // 팔자
             if (high_low > last) {
-                sell = true;
+                sell++;
             }
         }
 
@@ -130,17 +137,17 @@ public class KorbitServiceImpl implements KorbitService {
         } else {
             // 사자
             if (low_high < last) {
-                buy = true;
+                buy++;
             }
         }
 
         // 코빗 잔액 조회
         final Map balances = this.korbitRepository.balances(accessToken);
 
-        Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
-        Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
+        final Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
+        final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
-        if (sell || buy) {
+        if (sell > 3 || buy > 3) {
             log.info("* korbit ----------------------------");
             log.info("* korbit ++   : {} ", high);
             log.info("* korbit +    : {} ", high_low);
@@ -148,16 +155,9 @@ public class KorbitServiceImpl implements KorbitService {
             log.info("* korbit -    : {} ", low_high);
             log.info("* korbit --   : {} ", low);
             log.info("* korbit ----------------------------");
-
-            if (sell) {
-                log.info("* korbit sell : {} ", true);
-            }
-            if (buy) {
-                log.info("* korbit buy  : {} ", true);
-            }
-
+            log.info("* korbit sell : {} ", sell);
+            log.info("* korbit buy  : {} ", buy);
             log.info("* korbit ----------------------------");
-
             log.info("* korbit krw  : {} ", krw);
             log.info("* korbit btc  : {} ", btc);
 
@@ -166,50 +166,49 @@ public class KorbitServiceImpl implements KorbitService {
             //this.slackRepository.send(new SlackMessage().quote("sell " + sell).quote("buy " + buy));
         }
 
-        Map result = null;
-
-        if (sell) {
-            if (btc > 0) {
-                if (btc > this.sell_btc) {
-                    btc = this.sell_btc;
-                } else {
-                    low = last;
-                }
-
-                // 팔자
-                result = this.korbitRepository.sell(accessToken, btc, nonce++);
-
-                log.info("* korbit sell : {}", btc);
-                log.info("* korbit sell : {}", result);
-
-                this.slackRepository.send(new SlackMessage().quote("sell: " + btc).text(result.toString()));
-
-                buy = false;
-            }
-        }
-
-        if (buy) {
-            if (krw > 0) {
-                if (krw > this.buy_krw) {
-                    krw = this.buy_krw;
-                } else {
-                    high = last;
-                }
-
-                // 사자
-                result = this.korbitRepository.buy(accessToken, krw, nonce++);
-
-                log.info("* korbit buy  : {}", krw);
-                log.info("* korbit buy  : {}", result);
-
-                this.slackRepository.send(new SlackMessage().quote("buy: " + krw).text(result.toString()));
-            }
-        }
+        final Map<String, Object> korbit = new HashMap<>();
+        korbit.put("nonce", nonce);
+        korbit.put("last", last);
+        korbit.put("high", high);
+        korbit.put("low", low);
+        korbit.put("sell", sell);
+        korbit.put("buy", buy);
 
         // 기준가 저장 (토큰)
-        saveToken(token, nonce, high, low);
+        saveToken(token, korbit);
 
         // 결과
+        return korbit;
+    }
+
+    @Override
+    public Map trade() {
+        // 코빗 토큰 조회
+        final Map token = this.tokenRepository.getToken(this.username);
+
+        if (token == null) {
+            log.info("* korbit trade : token is null");
+            return null;
+        }
+
+        final Long sell = Long.parseLong(token.get("sell").toString());
+        final Long buy = Long.parseLong(token.get("buy").toString());
+
+        Map result = null;
+
+        if (sell > 3 || buy > 3) {
+            final String accessToken = token.get("access_token").toString();
+
+            // 코빗 잔액 조회
+            final Map balances = this.korbitRepository.balances(accessToken);
+
+            if (sell > buy) {
+                result = sell(token, balances);
+            } else {
+                result = buy(token, balances);
+            }
+        }
+
         return result;
     }
 
@@ -241,12 +240,15 @@ public class KorbitServiceImpl implements KorbitService {
 
         final Long last = Long.parseLong(ticker.get("last").toString());
 
+        final Float total = krw + (btc * last);
+
         final SlackAttachment attachment = new SlackAttachment("");
         attachment.addField(new SlackAttachment.Field("krw", krw.toString(), true));
         attachment.addField(new SlackAttachment.Field("btc", btc.toString(), true));
         attachment.addField(new SlackAttachment.Field("high", high + " (" + high_low + ")", true));
         attachment.addField(new SlackAttachment.Field("low", low + " (" + low_high + ")", true));
         attachment.addField(new SlackAttachment.Field("last", last.toString(), true));
+        attachment.addField(new SlackAttachment.Field("total", total.toString(), true));
         this.slackRepository.send(attachment);
 
         return balances;
@@ -263,35 +265,11 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         final String accessToken = token.get("access_token").toString();
-        Long nonce = Long.parseLong(token.get("nonce").toString());
-        final Long high = Long.parseLong(token.get("high").toString());
-        final Long low = Long.parseLong(token.get("low").toString());
 
         // 코빗 잔액 조회
         final Map balances = this.korbitRepository.balances(accessToken);
 
-        Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
-
-        Map result = null;
-
-        if (krw > 0) {
-            if (krw > this.buy_krw) {
-                krw = this.buy_krw;
-            }
-
-            // 사자
-            result = this.korbitRepository.buy(accessToken, krw, nonce++);
-
-            // 기준가 저장 (토큰)
-            saveToken(token, nonce, high, low);
-
-            log.info("korbit buy : {}", krw);
-            log.info("korbit buy : {}", result);
-
-            this.slackRepository.send(new SlackMessage().quote("buy: " + krw).text(result.toString()));
-        }
-
-        return result;
+        return buy(token, balances);
     }
 
     @Override
@@ -305,18 +283,59 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         final String accessToken = token.get("access_token").toString();
-        Long nonce = Long.parseLong(token.get("nonce").toString());
-        final Long high = Long.parseLong(token.get("high").toString());
-        final Long low = Long.parseLong(token.get("low").toString());
 
         // 코빗 잔액 조회
         final Map balances = this.korbitRepository.balances(accessToken);
+
+        return sell(token, balances);
+    }
+
+    private Map buy(final Map token, final Map balances) {
+        final String accessToken = token.get("access_token").toString();
+
+        Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
+
+        Map result = null;
+
+        if (krw > 0) {
+            Long nonce = Long.parseLong(token.get("nonce").toString());
+
+            if (krw > this.buy_krw) {
+                krw = this.buy_krw;
+            }
+
+            // 사자
+            result = this.korbitRepository.buy(accessToken, krw, nonce++);
+
+            log.info("korbit buy : {}", krw);
+            log.info("korbit buy : {}", result);
+
+            if (result != null) {
+                // 기준가 저장 (토큰)
+                saveToken(token, nonce);
+            }
+
+            final SlackAttachment attachment = new SlackAttachment("");
+            attachment.addField(new SlackAttachment.Field("buy", krw.toString(), true));
+            if (result != null) {
+                attachment.addField(new SlackAttachment.Field("last", token.get("last").toString(), true));
+            }
+            this.slackRepository.send(attachment);
+        }
+
+        return result;
+    }
+
+    private Map sell(final Map token, final Map balances) {
+        final String accessToken = token.get("access_token").toString();
 
         Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
         Map result = null;
 
         if (btc > 0) {
+            Long nonce = Long.parseLong(token.get("nonce").toString());
+
             if (btc > this.sell_btc) {
                 btc = this.sell_btc;
             }
@@ -324,19 +343,46 @@ public class KorbitServiceImpl implements KorbitService {
             // 팔자
             result = this.korbitRepository.sell(accessToken, btc, nonce++);
 
-            // 기준가 저장 (토큰)
-            saveToken(token, nonce, high, low);
-
             log.info("korbit sell : {}", btc);
             log.info("korbit sell : {}", result);
 
-            this.slackRepository.send(new SlackMessage().quote("sell: " + btc).text(result.toString()));
+            if (result != null) {
+                // 기준가 저장 (토큰)
+                saveToken(token, nonce);
+            }
+
+            final SlackAttachment attachment = new SlackAttachment("");
+            attachment.addField(new SlackAttachment.Field("sell", btc.toString(), true));
+            if (result != null) {
+                attachment.addField(new SlackAttachment.Field("last", token.get("last").toString(), true));
+            }
+            this.slackRepository.send(attachment);
         }
 
         return result;
     }
 
-    private Map saveToken(final Map token, final Long nonce, final Long high, final Long low) {
+    private Map saveToken(final Map token, final Map<String, Object> korbit) {
+        final Map<String, Object> map = new HashMap<>();
+        map.put("id", this.username);
+        map.put("token_type", token.get("token_type"));
+        map.put("access_token", token.get("access_token"));
+        map.put("expires_in", token.get("expires_in"));
+        map.put("refresh_token", token.get("refresh_token"));
+        map.put("nonce", korbit.get("nonce"));
+        map.put("last", korbit.get("last"));
+        map.put("high", korbit.get("high"));
+        map.put("low", korbit.get("low"));
+        map.put("sell", korbit.get("sell"));
+        map.put("buy", korbit.get("buy"));
+
+        // 토큰 저장
+        this.tokenRepository.setToken(map);
+
+        return korbit;
+    }
+
+    private void saveToken(final Map token, final Long nonce) {
         final Map<String, Object> map = new HashMap<>();
         map.put("id", this.username);
         map.put("token_type", token.get("token_type"));
@@ -344,13 +390,14 @@ public class KorbitServiceImpl implements KorbitService {
         map.put("expires_in", token.get("expires_in"));
         map.put("refresh_token", token.get("refresh_token"));
         map.put("nonce", nonce);
-        map.put("high", high);
-        map.put("low", low);
+        map.put("last", token.get("last"));
+        map.put("high", 0);
+        map.put("low", 0);
+        map.put("sell", 0);
+        map.put("buy", 0);
 
         // 토큰 저장
         this.tokenRepository.setToken(map);
-
-        return map;
     }
 
 }

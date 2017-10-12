@@ -10,6 +10,8 @@ public interface KorbitService {
 
     Map analyzer();
 
+    Map trade();
+
     Map balances();
 
     Map buy();
