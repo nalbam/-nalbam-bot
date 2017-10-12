@@ -26,14 +26,14 @@ public class KorbitTask {
         log.info("# korbit task token : {}", result);
     }
 
-    @Scheduled(cron = "15 */3 * * * *")
+    @Scheduled(cron = "15 * * * * *")
     public void analyzer() {
         final Map result = this.korbitService.analyzer();
 
         log.info("# korbit task analyzer : {}", result);
     }
 
-    @Scheduled(cron = "30 */15 * * * *")
+    @Scheduled(cron = "30 */5 * * * *")
     public void trade() {
         final Map result = this.korbitService.trade();
 
