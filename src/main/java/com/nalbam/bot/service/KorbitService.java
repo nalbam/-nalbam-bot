@@ -6,6 +6,8 @@ public interface KorbitService {
 
     Map token();
 
+    Map reset();
+
     Map analyzer();
 
     Map balances();

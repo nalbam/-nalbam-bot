@@ -29,4 +29,9 @@ public class KorbitController {
         return this.korbitService.sell();
     }
 
+    @GetMapping("/reset")
+    public Map reset() {
+        return this.korbitService.reset();
+    }
+
 }

@@ -75,6 +75,19 @@ public class KorbitServiceImpl implements KorbitService {
     }
 
     @Override
+    public Map reset() {
+        // 코빗 토큰 조회
+        final Map token = this.tokenRepository.getToken(this.username);
+
+        if (token == null) {
+            log.info("* korbit reset : token is null");
+            return null;
+        }
+
+        return saveToken(token, 0L, 0L, 0L);
+    }
+
+    @Override
     public Map analyzer() {
         // 코빗 토큰 조회
         final Map token = this.tokenRepository.getToken(this.username);
@@ -203,6 +216,7 @@ public class KorbitServiceImpl implements KorbitService {
         final Map token = this.tokenRepository.getToken(this.username);
 
         if (token == null) {
+            log.info("* korbit balances : token is null");
             return null;
         }
 
@@ -225,6 +239,7 @@ public class KorbitServiceImpl implements KorbitService {
         final Map token = this.tokenRepository.getToken(this.username);
 
         if (token == null) {
+            log.info("* korbit buy : token is null");
             return null;
         }
 
@@ -266,6 +281,7 @@ public class KorbitServiceImpl implements KorbitService {
         final Map token = this.tokenRepository.getToken(this.username);
 
         if (token == null) {
+            log.info("* korbit sell : token is null");
             return null;
         }
 
