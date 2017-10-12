@@ -89,7 +89,7 @@ public class KorbitServiceImpl implements KorbitService {
 
         final Map<String, Object> korbit = new HashMap<>();
         korbit.put("nonce", token.get("nonce"));
-        korbit.put("last", token.get("last"));
+        korbit.put("last", 0L);
         korbit.put("high", 0L);
         korbit.put("low", 0L);
         korbit.put("sell", 0L);
