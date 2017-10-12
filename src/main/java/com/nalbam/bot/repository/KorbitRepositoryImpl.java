@@ -29,9 +29,6 @@ public class KorbitRepositoryImpl implements KorbitRepository {
     @Value("${nalbam.korbit.client_secret}")
     private String client_secret;
 
-    @Value("${nalbam.korbit.grant_type}")
-    private String grant_type;
-
     @Value("${nalbam.korbit.username}")
     private String username;
 

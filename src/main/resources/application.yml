@@ -32,7 +32,6 @@ nalbam:
     api: ${KORBIT_API_URL:https://api.korbit.co.kr/v1}
     client_id: ${KORBIT_ACCESS_KEY:KORBIT_ACCESS_KEY}
     client_secret: ${KORBIT_SECRET_KEY:KORBIT_SECRET_KEY}
-    grant_type: ${KORBIT_GRANT_TYPE:password}
     username: ${KORBIT_USERNAME:username}
     password: ${KORBIT_PASSWORD:password}
   slack:
