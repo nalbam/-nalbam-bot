@@ -19,7 +19,7 @@ nalbam:
     sell:
       per: 0.003
       amt: 0.01
-      min: 0.01
+      min: 0.001
       sgn: 3
     buy:
       per: 0.003
