@@ -214,7 +214,7 @@ public class KorbitServiceImpl implements KorbitService {
         final Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
         final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
-        this.slackRepository.send(new SlackMessage().quote("krw " + krw).quote("btc " + btc));
+        this.slackRepository.send(new SlackMessage().quote("krw: " + krw).quote("btc: " + btc));
 
         return balances;
     }
