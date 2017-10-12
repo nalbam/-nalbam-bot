@@ -235,7 +235,6 @@ public class KorbitServiceImpl implements KorbitService {
 
         final Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
         final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
-        final Float eth = Float.parseFloat(((Map) balances.get("eth")).get("available").toString());
 
         // 현재 시세 조회
         final Map ticker = this.korbitRepository.getTicker();
@@ -245,10 +244,9 @@ public class KorbitServiceImpl implements KorbitService {
         final SlackAttachment attachment = new SlackAttachment("");
         attachment.addField(new SlackAttachment.Field("krw", krw.toString(), true));
         attachment.addField(new SlackAttachment.Field("btc", btc.toString(), true));
-        attachment.addField(new SlackAttachment.Field("eth", eth.toString(), true));
         attachment.addField(new SlackAttachment.Field("high", high + " (" + high_low + ")", true));
-        attachment.addField(new SlackAttachment.Field("last", last.toString(), true));
         attachment.addField(new SlackAttachment.Field("low", low + " (" + low_high + ")", true));
+        attachment.addField(new SlackAttachment.Field("last", last.toString(), true));
         this.slackRepository.send(attachment);
 
         return balances;
