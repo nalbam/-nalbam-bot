@@ -22,8 +22,8 @@ public class KorbitServiceImpl implements KorbitService {
     @Value("${nalbam.trade.sell.per}")
     private Float sell_per;
 
-    @Value("${nalbam.trade.sell.btc}")
-    private Float sell_btc;
+    @Value("${nalbam.trade.sell.amt}")
+    private Float sell_amt;
 
     @Value("${nalbam.trade.sell.min}")
     private Float sell_min;
@@ -34,8 +34,8 @@ public class KorbitServiceImpl implements KorbitService {
     @Value("${nalbam.trade.buy.per}")
     private Float buy_per;
 
-    @Value("${nalbam.trade.buy.krw}")
-    private Long buy_krw;
+    @Value("${nalbam.trade.buy.amt}")
+    private Long buy_amt;
 
     @Value("${nalbam.trade.buy.min}")
     private Long buy_min;
@@ -286,8 +286,8 @@ public class KorbitServiceImpl implements KorbitService {
         Map result = null;
 
         if (krw > this.buy_min) {
-            if (krw > this.buy_krw) {
-                krw = this.buy_krw;
+            if (krw > this.buy_amt) {
+                krw = this.buy_amt;
             }
 
             // 사자
@@ -320,8 +320,8 @@ public class KorbitServiceImpl implements KorbitService {
         Map result = null;
 
         if (btc > this.sell_min) {
-            if (btc > this.sell_btc) {
-                btc = this.sell_btc;
+            if (btc > this.sell_amt) {
+                btc = this.sell_amt;
             }
 
             // 팔자
