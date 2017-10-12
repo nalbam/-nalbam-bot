@@ -147,7 +147,7 @@ public class KorbitServiceImpl implements KorbitService {
 
             log.info("* korbit ----------------------------");
 
-            //this.slackRepository.send(new SlackMessage().quote("sell " + sell).quote("buy " + buy));
+            this.slackRepository.send(new SlackMessage().quote("sell " + sell).quote("buy " + buy));
         }
 
         Map result = null;
@@ -166,7 +166,7 @@ public class KorbitServiceImpl implements KorbitService {
                 log.info("* korbit sell : {}", btc);
                 log.info("* korbit sell : {}", result);
 
-                //this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
+                this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
 
                 buy = false;
             }
@@ -186,7 +186,7 @@ public class KorbitServiceImpl implements KorbitService {
                 log.info("* korbit buy  : {}", krw);
                 log.info("* korbit buy  : {}", result);
 
-                //this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
+                this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
             }
         }
 
@@ -229,7 +229,7 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         final String accessToken = token.get("access_token").toString();
-        final Long nonce = Long.parseLong(token.get("nonce").toString());
+        Long nonce = Long.parseLong(token.get("nonce").toString());
         final Long high = Long.parseLong(token.get("high").toString());
         final Long low = Long.parseLong(token.get("low").toString());
 
@@ -246,7 +246,7 @@ public class KorbitServiceImpl implements KorbitService {
             }
 
             // 사자
-            result = this.korbitRepository.buy(accessToken, krw, nonce);
+            result = this.korbitRepository.buy(accessToken, krw, nonce++);
 
             // 기준가 저장 (토큰)
             saveToken(token, nonce, high, low);
@@ -270,7 +270,7 @@ public class KorbitServiceImpl implements KorbitService {
         }
 
         final String accessToken = token.get("access_token").toString();
-        final Long nonce = Long.parseLong(token.get("nonce").toString());
+        Long nonce = Long.parseLong(token.get("nonce").toString());
         final Long high = Long.parseLong(token.get("high").toString());
         final Long low = Long.parseLong(token.get("low").toString());
 
@@ -287,7 +287,7 @@ public class KorbitServiceImpl implements KorbitService {
             }
 
             // 팔자
-            result = this.korbitRepository.sell(accessToken, btc, nonce);
+            result = this.korbitRepository.sell(accessToken, btc, nonce++);
 
             // 기준가 저장 (토큰)
             saveToken(token, nonce, high, low);
