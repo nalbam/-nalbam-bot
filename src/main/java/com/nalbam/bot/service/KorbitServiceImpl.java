@@ -166,7 +166,7 @@ public class KorbitServiceImpl implements KorbitService {
                 log.info("* korbit sell : {}", btc);
                 log.info("* korbit sell : {}", result);
 
-                this.slackRepository.send(new SlackMessage().quote("sell").text("btc: " + btc));
+                this.slackRepository.send(new SlackMessage().quote("sell: " + btc).text(result.toString()));
 
                 buy = false;
             }
@@ -186,7 +186,7 @@ public class KorbitServiceImpl implements KorbitService {
                 log.info("* korbit buy  : {}", krw);
                 log.info("* korbit buy  : {}", result);
 
-                this.slackRepository.send(new SlackMessage().quote("buy").text("krw: " + krw));
+                this.slackRepository.send(new SlackMessage().quote("buy: " + krw).text(result.toString()));
             }
         }
 
@@ -254,7 +254,7 @@ public class KorbitServiceImpl implements KorbitService {
             log.info("korbit buy : {}", krw);
             log.info("korbit buy : {}", result);
 
-            this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
+            this.slackRepository.send(new SlackMessage().quote("buy: " + krw).text(result.toString()));
         }
 
         return result;
@@ -295,7 +295,7 @@ public class KorbitServiceImpl implements KorbitService {
             log.info("korbit sell : {}", btc);
             log.info("korbit sell : {}", result);
 
-            this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
+            this.slackRepository.send(new SlackMessage().quote("sell: " + btc).text(result.toString()));
         }
 
         return result;
