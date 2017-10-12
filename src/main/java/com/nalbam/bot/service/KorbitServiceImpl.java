@@ -3,6 +3,7 @@ package com.nalbam.bot.service;
 import com.nalbam.bot.repository.KorbitRepository;
 import com.nalbam.bot.repository.SlackRepository;
 import com.nalbam.bot.repository.TokenRepository;
+import in.ashwanthkumar.slack.webhook.SlackAttachment;
 import in.ashwanthkumar.slack.webhook.SlackMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -233,14 +234,19 @@ public class KorbitServiceImpl implements KorbitService {
         final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
         final Float eth = Float.parseFloat(((Map) balances.get("eth")).get("available").toString());
 
-        this.slackRepository.send(new SlackMessage().quote("krw: " + krw + "  btc: " + btc + "  eth: " + eth));
-
         // 현재 시세 조회
         final Map ticker = this.korbitRepository.getTicker();
 
         final Long last = Long.parseLong(ticker.get("last").toString());
 
-        this.slackRepository.send(new SlackMessage().quote("last: " + last + "  high: " + high + "  low: " + low));
+        final SlackAttachment attachment = new SlackAttachment("");
+        attachment.addField(new SlackAttachment.Field("krw", krw.toString(), true));
+        attachment.addField(new SlackAttachment.Field("btc", btc.toString(), true));
+        attachment.addField(new SlackAttachment.Field("eth", eth.toString(), true));
+        attachment.addField(new SlackAttachment.Field("high", high.toString(), true));
+        attachment.addField(new SlackAttachment.Field("last", last.toString(), true));
+        attachment.addField(new SlackAttachment.Field("low", low.toString(), true));
+        this.slackRepository.send(attachment);
 
         return balances;
     }
