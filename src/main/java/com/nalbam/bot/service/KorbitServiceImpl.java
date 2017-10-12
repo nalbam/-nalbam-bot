@@ -156,9 +156,11 @@ public class KorbitServiceImpl implements KorbitService {
             if (btc > 0) {
                 if (btc > this.sell_btc) {
                     btc = this.sell_btc;
+                } else {
+                    low = last;
                 }
 
-                // TODO 팔자
+                // 팔자
                 result = this.korbitRepository.sell(accessToken, btc, nonce++);
 
                 log.info("* korbit sell : {}", btc);
@@ -167,9 +169,6 @@ public class KorbitServiceImpl implements KorbitService {
                 //this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
 
                 buy = false;
-            } else {
-                high = last;
-                low = last;
             }
         }
 
@@ -177,18 +176,17 @@ public class KorbitServiceImpl implements KorbitService {
             if (krw > 0) {
                 if (krw > this.buy_krw) {
                     krw = this.buy_krw;
+                } else {
+                    high = last;
                 }
 
-                // TODO 사자
+                // 사자
                 result = this.korbitRepository.buy(accessToken, krw, nonce++);
 
                 log.info("* korbit buy  : {}", krw);
                 log.info("* korbit buy  : {}", result);
 
                 //this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
-            } else {
-                high = last;
-                low = last;
             }
         }
 
@@ -247,7 +245,7 @@ public class KorbitServiceImpl implements KorbitService {
                 krw = this.buy_krw;
             }
 
-            // TODO 사자
+            // 사자
             result = this.korbitRepository.buy(accessToken, krw, nonce);
 
             // 기준가 저장 (토큰)
@@ -256,7 +254,7 @@ public class KorbitServiceImpl implements KorbitService {
             log.info("korbit buy : {}", krw);
             log.info("korbit buy : {}", result);
 
-            //this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
+            this.slackRepository.send(new SlackMessage().quote("buy").text(result.toString()));
         }
 
         return result;
@@ -288,7 +286,7 @@ public class KorbitServiceImpl implements KorbitService {
                 btc = this.sell_btc;
             }
 
-            // TODO 팔자
+            // 팔자
             result = this.korbitRepository.sell(accessToken, btc, nonce);
 
             // 기준가 저장 (토큰)
@@ -297,7 +295,7 @@ public class KorbitServiceImpl implements KorbitService {
             log.info("korbit sell : {}", btc);
             log.info("korbit sell : {}", result);
 
-            //this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
+            this.slackRepository.send(new SlackMessage().quote("sell").text(result.toString()));
         }
 
         return result;
