@@ -114,7 +114,6 @@ public class KorbitServiceImpl implements KorbitService {
             return null;
         }
 
-        final String accessToken = token.get("access_token").toString();
         final Long nonce = Long.parseLong(token.get("nonce").toString());
         Long high = Long.parseLong(token.get("high").toString());
         Long low = Long.parseLong(token.get("low").toString());
@@ -145,31 +144,6 @@ public class KorbitServiceImpl implements KorbitService {
             if (low_high < last) {
                 buy++;
             }
-        }
-
-        // 코빗 잔액 조회
-        final Map balances = this.korbitRepository.balances(accessToken);
-
-        final Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
-        final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
-
-        if (sell > this.sell_sgn || buy > this.buy_sgn) {
-            log.info("* korbit ----------------------------");
-            log.info("* korbit ++   : {} ", high);
-            log.info("* korbit +    : {} ", high_low);
-            log.info("* korbit last : {} ", last);
-            log.info("* korbit -    : {} ", low_high);
-            log.info("* korbit --   : {} ", low);
-            log.info("* korbit ----------------------------");
-            log.info("* korbit sell : {} ", sell);
-            log.info("* korbit buy  : {} ", buy);
-            log.info("* korbit ----------------------------");
-            log.info("* korbit krw  : {} ", krw);
-            log.info("* korbit btc  : {} ", btc);
-
-            log.info("* korbit ----------------------------");
-
-            //this.slackRepository.send(new SlackMessage().quote("sell " + sell).quote("buy " + buy));
         }
 
         final Map<String, Object> korbit = new HashMap<>();
@@ -299,13 +273,13 @@ public class KorbitServiceImpl implements KorbitService {
     private Map buy(final Map token, final Map balances) {
         final String accessToken = token.get("access_token").toString();
 
+        Long nonce = Long.parseLong(token.get("nonce").toString());
+
         Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
 
         Map result = null;
 
         if (krw > 0) {
-            Long nonce = Long.parseLong(token.get("nonce").toString());
-
             if (krw > this.buy_krw) {
                 krw = this.buy_krw;
             }
@@ -316,11 +290,6 @@ public class KorbitServiceImpl implements KorbitService {
             log.info("korbit buy : {}", krw);
             log.info("korbit buy : {}", result);
 
-            if (result != null) {
-                // 기준가 저장 (토큰)
-                saveToken(token, nonce);
-            }
-
             final SlackAttachment attachment = new SlackAttachment("");
             attachment.addField(new SlackAttachment.Field("buy", krw.toString(), true));
             if (result != null) {
@@ -329,19 +298,22 @@ public class KorbitServiceImpl implements KorbitService {
             this.slackRepository.send(attachment);
         }
 
+        // 기준가 저장 (토큰)
+        saveToken(token, nonce);
+
         return result;
     }
 
     private Map sell(final Map token, final Map balances) {
         final String accessToken = token.get("access_token").toString();
 
+        Long nonce = Long.parseLong(token.get("nonce").toString());
+
         Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
         Map result = null;
 
         if (btc > 0) {
-            Long nonce = Long.parseLong(token.get("nonce").toString());
-
             if (btc > this.sell_btc) {
                 btc = this.sell_btc;
             }
@@ -352,11 +324,6 @@ public class KorbitServiceImpl implements KorbitService {
             log.info("korbit sell : {}", btc);
             log.info("korbit sell : {}", result);
 
-            if (result != null) {
-                // 기준가 저장 (토큰)
-                saveToken(token, nonce);
-            }
-
             final SlackAttachment attachment = new SlackAttachment("");
             attachment.addField(new SlackAttachment.Field("sell", btc.toString(), true));
             if (result != null) {
@@ -364,6 +331,9 @@ public class KorbitServiceImpl implements KorbitService {
             }
             this.slackRepository.send(attachment);
         }
+
+        // 기준가 저장 (토큰)
+        saveToken(token, nonce);
 
         return result;
     }
@@ -397,8 +367,8 @@ public class KorbitServiceImpl implements KorbitService {
         map.put("refresh_token", token.get("refresh_token"));
         map.put("nonce", nonce);
         map.put("last", token.get("last"));
-        map.put("high", 0);
-        map.put("low", 0);
+        map.put("high", token.get("last"));
+        map.put("low", token.get("last"));
         map.put("sell", 0);
         map.put("buy", 0);
 
