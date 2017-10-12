@@ -38,7 +38,7 @@ public class TokenRepositoryImpl implements TokenRepository {
             return (Map) map.get("Item");
         } catch (final Exception e) {
             log.info(e.getMessage());
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return null;
     }
@@ -60,7 +60,7 @@ public class TokenRepositoryImpl implements TokenRepository {
             new ObjectMapper().readValue(response.getBody(), Map.class);
         } catch (final Exception e) {
             log.info(e.getMessage());
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
