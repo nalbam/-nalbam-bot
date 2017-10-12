@@ -19,6 +19,16 @@ public class KorbitController {
     @Autowired
     private KorbitService korbitService;
 
+    @GetMapping("/token")
+    public Map token() {
+        return this.korbitService.token();
+    }
+
+    @GetMapping("/reset")
+    public Map reset() {
+        return this.korbitService.reset();
+    }
+
     @GetMapping("/buy")
     public Map buy() {
         return this.korbitService.buy();
@@ -27,11 +37,6 @@ public class KorbitController {
     @GetMapping("/sell")
     public Map sell() {
         return this.korbitService.sell();
-    }
-
-    @GetMapping("/reset")
-    public Map reset() {
-        return this.korbitService.reset();
     }
 
 }
