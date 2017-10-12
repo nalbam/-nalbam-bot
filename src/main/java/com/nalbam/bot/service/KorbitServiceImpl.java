@@ -84,7 +84,9 @@ public class KorbitServiceImpl implements KorbitService {
             return null;
         }
 
-        return saveToken(token, 0L, 0L, 0L);
+        final Long nonce = Long.parseLong(token.get("nonce").toString());
+
+        return saveToken(token, nonce, 0L, 0L);
     }
 
     @Override
