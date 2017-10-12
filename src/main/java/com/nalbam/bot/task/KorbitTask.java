@@ -19,24 +19,21 @@ public class KorbitTask {
     @Autowired
     private KorbitService korbitService;
 
-    // 30분 마다
-    @Scheduled(cron = "0 */30 * * * *")
+    @Scheduled(cron = "30 */30 * * * *")
     public void token() {
         final Map result = this.korbitService.token();
 
         log.info("# korbit task token : {}", result);
     }
 
-    // 3분 마다
-    @Scheduled(fixedRate = 180000)
+    @Scheduled(cron = "00 */15 * * * *")
     public void analyzer() {
         final Map result = this.korbitService.analyzer();
 
         log.info("# korbit task analyzer : {}", result);
     }
 
-    // 매시 정각
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "00 */10 * * * *")
     public void balances() {
         final Map result = this.korbitService.balances();
 
