@@ -221,6 +221,7 @@ public class KorbitServiceImpl implements KorbitService {
         final String accessToken = token.get("access_token").toString();
         final Long high = Long.parseLong(token.get("high").toString());
         final Long low = Long.parseLong(token.get("low").toString());
+        final Long last = Long.parseLong(token.get("last").toString());
 
         final Float high_low = high - (high * this.sell_per);
         final Float low_high = low + (low * this.sell_per);
@@ -231,11 +232,7 @@ public class KorbitServiceImpl implements KorbitService {
         final Long krw = Long.parseLong(((Map) balances.get("krw")).get("available").toString());
         final Float btc = Float.parseFloat(((Map) balances.get("btc")).get("available").toString());
 
-        // 현재 시세 조회
-        final Map ticker = this.korbitRepository.getTicker();
-
-        final Long last = Long.parseLong(ticker.get("last").toString());
-
+        // 잔액
         final Float total = krw + (btc * last);
 
         final SlackAttachment attachment = new SlackAttachment("");
