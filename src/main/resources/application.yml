@@ -24,7 +24,7 @@ nalbam:
     buy:
       per: 0.003
       amt: 50000
-      min: 500
+      min: 5000
       sgn: 3
   aws:
     api: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
