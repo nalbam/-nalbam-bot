@@ -1,5 +1,6 @@
 package com.nalbam.bot.repository;
 
+import java.util.List;
 import java.util.Map;
 
 public interface KorbitRepository {
@@ -9,6 +10,8 @@ public interface KorbitRepository {
     Map getToken(String token);
 
     Map getTicker();
+
+    List getTransactions();
 
     Map balances(String token);
 

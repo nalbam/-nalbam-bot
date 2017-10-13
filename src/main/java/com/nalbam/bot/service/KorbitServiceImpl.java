@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -126,10 +127,8 @@ public class KorbitServiceImpl implements KorbitService {
         Long sell = Long.parseLong(token.get("sell").toString());
         Long buy = Long.parseLong(token.get("buy").toString());
 
-        // 현재 시세 조회
-        final Map ticker = this.korbitRepository.getTicker();
-
-        final Long last = Long.parseLong(ticker.get("last").toString());
+        // 최종 체결 가격
+        final Long last = getLastPrice();
 
         final Float high_low = high - (high * this.sell_per);
         final Float low_high = low + (low * this.sell_per);
@@ -281,6 +280,25 @@ public class KorbitServiceImpl implements KorbitService {
         final Map balances = this.korbitRepository.balances(accessToken);
 
         return sell(token, balances);
+    }
+
+    private Long getLastPrice() {
+        // 최종 체결 가격
+        //final Map ticker = this.korbitRepository.getTicker();
+        //return Long.parseLong(ticker.get("last").toString());
+
+        // 체결 내역
+        final List transactions = this.korbitRepository.getTransactions();
+        Map map;
+        Long price = 0L;
+        Long count = 0L;
+        for (final Object o : transactions) {
+            map = (Map) o;
+
+            price = price + Long.parseLong(map.get("price").toString());
+            count++;
+        }
+        return price / count;
     }
 
     private Map buy(final Map token, final Map balances) {
