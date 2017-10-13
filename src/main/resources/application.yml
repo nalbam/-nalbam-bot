@@ -17,12 +17,12 @@ nalbam:
     base: com.nalbam
   trade:
     sell:
-      per: 0.003
+      per: 0.01
       amt: 0.01
       min: 0.001
       sgn: 3
     buy:
-      per: 0.003
+      per: 0.01
       amt: 50000
       min: 5000
       sgn: 3
