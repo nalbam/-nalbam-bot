@@ -294,7 +294,7 @@ public class KorbitServiceImpl implements KorbitService {
         final String status;
 
         if (krw > this.buy_min) {
-            if (krw > this.buy_amt) {
+            if (krw > (this.buy_amt + this.buy_min)) {
                 krw = this.buy_amt;
             }
 
@@ -335,7 +335,7 @@ public class KorbitServiceImpl implements KorbitService {
         final String status;
 
         if (btc > this.sell_min) {
-            if (btc > this.sell_amt) {
+            if (btc > (this.sell_amt + this.sell_min)) {
                 btc = this.sell_amt;
             }
 
