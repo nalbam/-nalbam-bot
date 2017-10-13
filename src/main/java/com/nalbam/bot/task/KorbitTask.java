@@ -19,28 +19,28 @@ public class KorbitTask {
     @Autowired
     private KorbitService korbitService;
 
-    @Scheduled(cron = "${nalbam.task.token}")
+    @Scheduled(cron = "00 */30 * * * *")
     public void token() {
         final Map result = this.korbitService.token();
 
         log.info("# korbit task token : {}", result);
     }
 
-    @Scheduled(cron = "${nalbam.task.analyzer")
+    @Scheduled(cron = "15 * * * * *")
     public void analyzer() {
         final Map result = this.korbitService.analyzer();
 
         log.info("# korbit task analyzer : {}", result);
     }
 
-    @Scheduled(cron = "${nalbam.task.trade")
+    @Scheduled(cron = "30 */5 * * * *")
     public void trade() {
         final Map result = this.korbitService.trade();
 
         log.info("# korbit task trade : {}", result);
     }
 
-    @Scheduled(cron = "${nalbam.task.balances")
+    @Scheduled(cron = "45 */10 * * * *")
     public void balances() {
         final Map result = this.korbitService.balances();
 

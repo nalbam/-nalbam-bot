@@ -15,11 +15,6 @@ nalbam:
   app:
     name: bot
     base: com.nalbam
-  task:
-    token:    00 */30 * * * *
-    analyzer: 15 * * * * *
-    trade:    30 */5 * * * *
-    balances: 45 */10 * * * *
   trade:
     sell:
       per: 0.005
