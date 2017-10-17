@@ -16,21 +16,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AmazonConfig {
 
-    @Value("${nalbam.aws.profile}")
-    private String profile;
-
     @Value("${nalbam.aws.region}")
     private String region;
 
     private AWSCredentials credentials() {
         final AWSCredentials credentials;
         try {
-            credentials = new ProfileCredentialsProvider(this.profile).getCredentials();
+            credentials = new ProfileCredentialsProvider().getCredentials();
         } catch (final Exception e) {
             throw new AmazonClientException(
                     "Cannot load the credentials from the credential profiles file. " +
                             "Please make sure that your credentials file is at the correct " +
-                            "location (/usr/" + this.profile + "/.aws/credentials), and is in a valid format.",
+                            "location (/usr/username/.aws/credentials), and is in a valid format.",
                     e);
         }
         return credentials;

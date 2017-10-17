@@ -27,10 +27,8 @@ nalbam:
       min: 5000
       sgn: 3
   aws:
-    profile: ec2-user
     region: ${AWS_REGION:us-east-1}
-    s3:
-      bucket: ${AWS_BUCKET:sample.bucket.com}
+    bucket: ${AWS_BUCKET:sample.bucket.com}
     api:
       url: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
       key: ${AWS_API_KEY:STRING}
