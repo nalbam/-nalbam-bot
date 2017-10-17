@@ -30,7 +30,8 @@ nalbam:
     access_key: ${AWS_ACCESS_KEY:STRING}
     secret_key: ${AWS_SECRET_KEY:STRING}
     region: ${AWS_REGION:us-east-1}
-    bucket: ${AWS_BUCKET:sample.bucket.com}
+    s3:
+      bucket: ${AWS_BUCKET:sample.bucket.com}
     api:
       url: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
       key: ${AWS_API_KEY:STRING}

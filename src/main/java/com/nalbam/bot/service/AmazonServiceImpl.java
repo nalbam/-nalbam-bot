@@ -23,7 +23,7 @@ import java.util.UUID;
 @Service
 public class AmazonServiceImpl implements AmazonService {
 
-    @Value("${aws.s3.bucket}")
+    @Value("${nalbam.aws.s3.bucket}")
     private String bucket;
 
     @Autowired
