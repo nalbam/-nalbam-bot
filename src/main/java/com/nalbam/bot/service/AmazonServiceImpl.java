@@ -8,15 +8,19 @@ import com.amazonaws.services.rekognition.model.SearchFacesByImageResult;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+@Slf4j
+@Service
 public class AmazonServiceImpl implements AmazonService {
 
     @Value("${aws.s3.bucket}")
@@ -32,7 +36,7 @@ public class AmazonServiceImpl implements AmazonService {
     public SearchFacesByImageResult searchFaces(final String key) {
         final String collectionId = UUID.randomUUID().toString();
 
-        final Image image = getImage(this.bucket, key);
+        final Image image = getImage(key);
 
         final Float threshold = 70F;
         final Integer maxFaces = 3;
@@ -72,8 +76,8 @@ public class AmazonServiceImpl implements AmazonService {
         return file;
     }
 
-    private Image getImage(final String bucket, final String key) {
-        return getImage(new S3Object().withBucket(bucket).withName(key));
+    private Image getImage(final String key) {
+        return getImage(new S3Object().withBucket(this.bucket).withName(key));
     }
 
     private Image getImage(final S3Object s3Object) {
