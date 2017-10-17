@@ -14,10 +14,10 @@ import java.util.Map;
 @Component
 public class TokenRepositoryImpl implements TokenRepository {
 
-    @Value("${nalbam.aws.api}")
-    private String api;
+    @Value("${nalbam.aws.api.url}")
+    private String url;
 
-    @Value("${nalbam.aws.key}")
+    @Value("${nalbam.aws.api.key}")
     private String key;
 
     @Autowired
@@ -25,7 +25,7 @@ public class TokenRepositoryImpl implements TokenRepository {
 
     @Override
     public Map getToken(final String id) {
-        final String url = this.api + "/token/" + id;
+        final String url = this.url + "/token/" + id;
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add("x-api-key", this.key);
@@ -45,7 +45,7 @@ public class TokenRepositoryImpl implements TokenRepository {
 
     @Override
     public void setToken(final Map params) {
-        final String url = this.api + "/token";
+        final String url = this.url + "/token";
 
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

@@ -25,7 +25,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- versions -->
+        <aws.version>1.11.213</aws.version>
         <netty.version>4.1.15.Final</netty.version>
+        <slack.version>0.0.8</slack.version>
         <swagger.version>2.7.0</swagger.version>
     </properties>
 
@@ -36,6 +38,18 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- apache-commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+
         <!-- netty -->
         <dependency>
             <groupId>io.netty</groupId>
@@ -43,18 +57,18 @@
             <version>${netty.version}</version>
         </dependency>
 
+        <!-- aws -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>${aws.version}</version>
+        </dependency>
+
         <!-- slack -->
         <dependency>
             <groupId>in.ashwanthkumar</groupId>
             <artifactId>slack-java-webhook</artifactId>
-            <version>0.0.8</version>
-        </dependency>
-
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>${slack.version}</version>
         </dependency>
 
         <!-- swagger -->
@@ -67,6 +81,13 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <!-- test -->
