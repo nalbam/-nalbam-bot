@@ -27,6 +27,8 @@ nalbam:
       min: 5000
       sgn: 3
   aws:
+    access_key: ${AWS_SECRET_KEY:STRING}
+    secret_key: ${AWS_SECRET_KEY:STRING}
     region: ${AWS_REGION:us-east-1}
     bucket: ${AWS_BUCKET:sample.bucket.com}
     api:
