@@ -1,7 +1,9 @@
 package com.nalbam.bot.config;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
@@ -14,30 +16,39 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AmazonConfig {
 
-    @Value("${nalbam.aws.access_key}")
-    private String access_key;
-
-    @Value("${nalbam.aws.secret_key}")
-    private String secret_key;
+    @Value("${nalbam.aws.profile}")
+    private String profile;
 
     @Value("${nalbam.aws.region}")
     private String region;
 
+    private AWSCredentials credentials() {
+        final AWSCredentials credentials;
+        try {
+            credentials = new ProfileCredentialsProvider(this.profile).getCredentials();
+        } catch (final Exception e) {
+            throw new AmazonClientException(
+                    "Cannot load the credentials from the credential profiles file. " +
+                            "Please make sure that your credentials file is at the correct " +
+                            "location (/usr/" + this.profile + "/.aws/credentials), and is in a valid format.",
+                    e);
+        }
+        return credentials;
+    }
+
     @Bean
     public AmazonS3 amazonS3() {
-        final BasicAWSCredentials awsCredentials = new BasicAWSCredentials(this.access_key, this.secret_key);
         return AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.fromName(this.region))
-                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                .withCredentials(new AWSStaticCredentialsProvider(credentials()))
                 .build();
     }
 
     @Bean
     public AmazonRekognition amazonRekognition() {
-        final BasicAWSCredentials awsCredentials = new BasicAWSCredentials(this.access_key, this.secret_key);
         return AmazonRekognitionClientBuilder.standard()
                 .withRegion(Regions.fromName(this.region))
-                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                .withCredentials(new AWSStaticCredentialsProvider(credentials()))
                 .build();
     }
 

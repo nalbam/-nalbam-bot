@@ -8,7 +8,6 @@ import org.springframework.http.client.Netty4ClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLException;
@@ -16,7 +15,7 @@ import java.util.concurrent.Executor;
 
 @EnableAsync
 @Configuration
-public class AsyncConfig extends AsyncConfigurerSupport {
+public class ExecutorConfig extends AsyncConfigurerSupport {
 
     @Value("${nalbam.app.name}")
     private String name;
@@ -26,13 +25,6 @@ public class AsyncConfig extends AsyncConfigurerSupport {
         final Netty4ClientHttpRequestFactory nettyFactory = new Netty4ClientHttpRequestFactory();
         nettyFactory.setSslContext(SslContextBuilder.forClient().build());
         return new RestTemplate(nettyFactory);
-    }
-
-    @Bean
-    public AsyncRestTemplate asyncRestTemplate() throws SSLException {
-        final Netty4ClientHttpRequestFactory nettyFactory = new Netty4ClientHttpRequestFactory();
-        nettyFactory.setSslContext(SslContextBuilder.forClient().build());
-        return new AsyncRestTemplate(nettyFactory);
     }
 
     @Override
