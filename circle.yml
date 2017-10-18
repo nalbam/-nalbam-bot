@@ -31,3 +31,4 @@ deployment:
     branch: master
     commands:
       - ~/toaster/toast.sh p eb
+      - ~/toaster/toast.sh d eb
