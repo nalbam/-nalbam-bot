@@ -1,6 +1,5 @@
 package com.nalbam.bot.config;
 
-import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
@@ -26,22 +25,20 @@ public class AmazonConfig {
 
     @Bean
     public AmazonS3 amazonS3() {
+        final BasicAWSCredentials credentials = new BasicAWSCredentials(this.access_key, this.secret_key);
         return AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.fromName(this.region))
-                .withCredentials(new AWSStaticCredentialsProvider(credentials()))
+                .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
     }
 
     @Bean
     public AmazonRekognition amazonRekognition() {
+        final BasicAWSCredentials credentials = new BasicAWSCredentials(this.access_key, this.secret_key);
         return AmazonRekognitionClientBuilder.standard()
                 .withRegion(Regions.fromName(this.region))
-                .withCredentials(new AWSStaticCredentialsProvider(credentials()))
+                .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
-    }
-
-    private AWSCredentials credentials() {
-        return new BasicAWSCredentials(this.access_key, this.secret_key);
     }
 
 }
