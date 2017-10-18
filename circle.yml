@@ -8,7 +8,8 @@ dependencies:
   pre:
     - curl -s toast.sh/install-v3 | bash
   post:
-    - ~/toaster/toast.sh c ORG me17
+    - ~/toaster/toast.sh c REGION us-east-1
+    - ~/toaster/toast.sh c BUCKET repo.me17-us.com
 
 compile:
   pre:
