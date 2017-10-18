@@ -6,13 +6,13 @@ machine:
 
 dependencies:
   pre:
-    - curl -s toast.sh/install | bash
+    - curl -s toast.sh/install-v3 | bash
   post:
-    - ~/toaster/toast.sh config circle local me17-us $TOAST_TOKEN
+    - ~/toaster/toast.sh c ORG me17
 
 compile:
   pre:
-    - ~/toaster/toast.sh build version $CIRCLE_BRANCH
+    - ~/toaster/toast.sh v $CIRCLE_BRANCH
   override:
     - mvn clean package
 
@@ -24,8 +24,8 @@ deployment:
   development:
     branch: /^(?!master$).*$/
     commands:
-      - ~/toaster/toast.sh build eb
+      - ~/toaster/toast.sh p
   production:
     branch: master
     commands:
-      - ~/toaster/toast.sh build eb
+      - ~/toaster/toast.sh p
