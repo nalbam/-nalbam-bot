@@ -1,6 +1,5 @@
 machine:
-  timezone:
-    Asia/Seoul
+  timezone: Asia/Seoul
   java:
     version: oraclejdk8
 
@@ -15,10 +14,8 @@ compile:
   pre:
     - ~/toaster/toast.sh v $CIRCLE_BRANCH
   override:
-    - mvn clean package
-
-test:
-  override:
+    - mvn clean package -DskipTests
+  post:
     - ls -al target
 
 deployment:
