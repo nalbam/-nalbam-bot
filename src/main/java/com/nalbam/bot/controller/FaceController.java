@@ -28,7 +28,7 @@ public class FaceController {
     }
 
     @PostMapping("/upload")
-    public PutObjectResult upload(@RequestBody final MultipartFile multipartFile) {
+    public PutObjectResult upload(@RequestPart final MultipartFile multipartFile) {
         return this.amazonService.upload(multipartFile);
     }
 

@@ -52,6 +52,8 @@ public class AmazonServiceImpl implements AmazonService {
 
     @Override
     public PutObjectResult upload(final MultipartFile multipartFile) {
+        log.info("upload {}", multipartFile);
+
         final String exe = FilenameUtils.getExtension(multipartFile.getOriginalFilename()).toLowerCase();
         final String key = UUID.randomUUID().toString() + "." + exe;
 
