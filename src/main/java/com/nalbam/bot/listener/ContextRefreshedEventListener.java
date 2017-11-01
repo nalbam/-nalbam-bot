@@ -20,7 +20,7 @@ public class ContextRefreshedEventListener implements ApplicationListener<Contex
 
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
-        log.info("## context refreshed : {}", this.name);
+        log.info("Context refreshed : [{}]", this.name);
 
         this.slackService.send("Context refreshed : [" + this.name + "]");
     }
