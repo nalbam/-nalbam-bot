@@ -1,5 +1,6 @@
 package com.nalbam.bot.controller;
 
+import com.amazonaws.services.rekognition.model.DetectFacesResult;
 import com.amazonaws.services.rekognition.model.SearchFacesByImageResult;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.nalbam.bot.service.AmazonService;
@@ -16,9 +17,14 @@ public class FaceController {
     @Autowired
     private AmazonService amazonService;
 
-    @GetMapping
-    public SearchFacesByImageResult search(@RequestParam final String key) {
+    @GetMapping("/search")
+    public SearchFacesByImageResult searchFaces(@RequestParam final String key) {
         return this.amazonService.searchFaces(key);
+    }
+
+    @GetMapping("/detect")
+    public DetectFacesResult detectFaces(@RequestParam final String key) {
+        return this.amazonService.detectFaces(key);
     }
 
     @PostMapping

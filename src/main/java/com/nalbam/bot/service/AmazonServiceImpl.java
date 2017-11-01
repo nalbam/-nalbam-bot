@@ -1,10 +1,7 @@
 package com.nalbam.bot.service;
 
 import com.amazonaws.services.rekognition.AmazonRekognition;
-import com.amazonaws.services.rekognition.model.Image;
-import com.amazonaws.services.rekognition.model.S3Object;
-import com.amazonaws.services.rekognition.model.SearchFacesByImageRequest;
-import com.amazonaws.services.rekognition.model.SearchFacesByImageResult;
+import com.amazonaws.services.rekognition.model.*;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
@@ -38,16 +35,24 @@ public class AmazonServiceImpl implements AmazonService {
 
         final Image image = getImage(key);
 
-        final Float threshold = 70F;
-        final Integer maxFaces = 3;
-
-        final SearchFacesByImageRequest searchFacesByImageRequest = new SearchFacesByImageRequest()
+        final SearchFacesByImageRequest request = new SearchFacesByImageRequest()
                 .withCollectionId(collectionId)
                 .withImage(image)
-                .withFaceMatchThreshold(threshold)
-                .withMaxFaces(maxFaces);
+                .withFaceMatchThreshold(70F)
+                .withMaxFaces(3);
 
-        return this.amazonRekognition.searchFacesByImage(searchFacesByImageRequest);
+        return this.amazonRekognition.searchFacesByImage(request);
+    }
+
+    @Override
+    public DetectFacesResult detectFaces(final String key) {
+        final Image image = getImage(key);
+
+        final DetectFacesRequest request = new DetectFacesRequest()
+                .withImage(image)
+                .withAttributes(Attribute.ALL);
+
+        return this.amazonRekognition.detectFaces(request);
     }
 
     @Override
