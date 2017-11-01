@@ -2,9 +2,10 @@ package com.nalbam.bot.service;
 
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.model.*;
-import com.amazonaws.services.rekognition.model.S3Object;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +67,8 @@ public class AmazonServiceImpl implements AmazonService {
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
 
-            final AccessControlList acl = new AccessControlList();
-            acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
-
             final PutObjectRequest request = new PutObjectRequest(this.bucket, key, file.getInputStream(), metadata)
-                    .withAccessControlList(acl);
+                    .withCannedAcl(CannedAccessControlList.PublicRead);
 
             this.amazonS3.putObject(request);
 
