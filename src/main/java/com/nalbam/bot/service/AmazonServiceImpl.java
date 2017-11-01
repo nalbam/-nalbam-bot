@@ -30,22 +30,7 @@ public class AmazonServiceImpl implements AmazonService {
     private AmazonRekognition amazonRekognition;
 
     @Override
-    public SearchFacesByImageResult searchFaces(final String key) {
-        final String collectionId = UUID.randomUUID().toString();
-
-        final Image image = getImage(key);
-
-        final SearchFacesByImageRequest request = new SearchFacesByImageRequest()
-                .withCollectionId(collectionId)
-                .withImage(image)
-                .withFaceMatchThreshold(70F)
-                .withMaxFaces(3);
-
-        return this.amazonRekognition.searchFacesByImage(request);
-    }
-
-    @Override
-    public DetectFacesResult detectFaces(final String key) {
+    public DetectFacesResult detect(final String key) {
         final Image image = getImage(key);
 
         final DetectFacesRequest request = new DetectFacesRequest()
@@ -53,6 +38,16 @@ public class AmazonServiceImpl implements AmazonService {
                 .withAttributes(Attribute.ALL);
 
         return this.amazonRekognition.detectFaces(request);
+    }
+
+    @Override
+    public RecognizeCelebritiesResult celebrity(final String key) {
+        final Image image = getImage(key);
+
+        final RecognizeCelebritiesRequest request = new RecognizeCelebritiesRequest()
+                .withImage(image);
+
+        return this.amazonRekognition.recognizeCelebrities(request);
     }
 
     @Override
