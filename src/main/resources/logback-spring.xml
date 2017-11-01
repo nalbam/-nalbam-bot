@@ -26,7 +26,7 @@
         <appender-ref ref="ROLLIN"/>
     </root>
 
-    <root level="debug">
+    <root level="INFO">
         <!-- IMPORTANT: make sure to include this line, otherwise the appender won't be used -->
         <appender-ref ref="LogzioLogbackAppender"/>
     </root>
