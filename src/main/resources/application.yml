@@ -36,9 +36,9 @@ nalbam:
       key: ${AWS_API_KEY:STRING}
     sqs:
       queueName: bot
-      maxTimeout: 36000
-      maxDelay: 900
-      endPoint: sqs.ap-northeast-2.amazonaws.com
+      maxTimeout: ${AWS_SQS_MAX_TIMEOUT:36000}
+      maxDelay: ${AWS_SQS_MAX_DELAY:900}
+      endPoint: sqs.${AWS_REGION:us-east-1}.amazonaws.com
   korbit:
     api: ${KORBIT_API_URL:https://api.korbit.co.kr/v1}
     client_id: ${KORBIT_ACCESS_KEY:STRING}
