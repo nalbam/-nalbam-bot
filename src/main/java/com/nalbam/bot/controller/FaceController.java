@@ -2,12 +2,13 @@ package com.nalbam.bot.controller;
 
 import com.amazonaws.services.rekognition.model.DetectFacesResult;
 import com.amazonaws.services.rekognition.model.RecognizeCelebritiesResult;
-import com.amazonaws.services.s3.model.PutObjectResult;
 import com.nalbam.bot.service.AmazonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -28,7 +29,7 @@ public class FaceController {
     }
 
     @PostMapping("/upload")
-    public PutObjectResult upload(@RequestParam final MultipartFile file) {
+    public Map<String, Object> upload(@RequestParam final MultipartFile file) {
         return this.amazonService.upload(file);
     }
 
