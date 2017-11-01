@@ -27,13 +27,18 @@ nalbam:
       min: 5000
       sgn: 3
   aws:
-    access_key: ${AWS_SECRET_KEY:STRING}
-    secret_key: ${AWS_SECRET_KEY:STRING}
+    accessKey: ${AWS_ACCESS_KEY:STRING}
+    secretKey: ${AWS_SECRET_KEY:STRING}
     region: ${AWS_REGION:us-east-1}
-    bucket: ${AWS_BUCKET:sample.bucket.com}
+    bucket: ${AWS_BUCKET:us-east-1.nalbam.com}
     api:
       url: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
       key: ${AWS_API_KEY:STRING}
+    sqs:
+      queueName: bot
+      maxTimeout: 36000
+      maxDelay: 900
+      endPoint: sqs.ap-northeast-2.amazonaws.com
   korbit:
     api: ${KORBIT_API_URL:https://api.korbit.co.kr/v1}
     client_id: ${KORBIT_ACCESS_KEY:STRING}
@@ -42,5 +47,5 @@ nalbam:
     password: ${KORBIT_PASSWORD:password}
     enabled: false
   slack:
-    webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/web/hook/url}
+    webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/web/hook/token}
     channel: ${SLACK_CHANNEL:sandbox}

@@ -64,6 +64,13 @@
             <version>${aws.version}</version>
         </dependency>
 
+        <!-- push -->
+        <dependency>
+            <groupId>com.google.gcm</groupId>
+            <artifactId>gcm-server</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- slack -->
         <dependency>
             <groupId>in.ashwanthkumar</groupId>
