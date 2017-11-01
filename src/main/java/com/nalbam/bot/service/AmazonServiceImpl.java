@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -54,17 +55,23 @@ public class AmazonServiceImpl implements AmazonService {
     public PutObjectResult upload(final MultipartFile file) {
         log.info("## upload : {}", file.getContentType());
         log.info("## upload : {}", file.getOriginalFilename());
-        log.info("## upload : {}", file.getName());
         log.info("## upload : {}", file.getSize());
 
         final String exe = FilenameUtils.getExtension(file.getOriginalFilename()).toLowerCase();
         final String key = UUID.randomUUID().toString() + "." + exe;
 
-        final ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType(file.getContentType());
+        log.info("## upload : https://s3.amazonaws.com/{}/{}", this.bucket, key);
 
         try {
-            final PutObjectRequest request = new PutObjectRequest(this.bucket, key, file.getInputStream(), objectMetadata);
+            final byte[] bytes = IOUtils.toByteArray(file.getInputStream());
+            log.info("## upload : {}", bytes.length);
+
+            final ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+            //metadata.setContentLength(file.getSize());
+            metadata.setContentLength(bytes.length);
+
+            final PutObjectRequest request = new PutObjectRequest(this.bucket, key, file.getInputStream(), metadata);
 
             return this.amazonS3.putObject(request);
         } catch (final IOException e) {
