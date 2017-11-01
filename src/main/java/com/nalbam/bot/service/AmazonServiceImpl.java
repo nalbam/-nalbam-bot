@@ -51,17 +51,20 @@ public class AmazonServiceImpl implements AmazonService {
     }
 
     @Override
-    public PutObjectResult upload(final MultipartFile multipartFile) {
-        log.info("upload {}", multipartFile);
+    public PutObjectResult upload(final MultipartFile file) {
+        log.info("## upload : {}", file.getContentType());
+        log.info("## upload : {}", file.getOriginalFilename());
+        log.info("## upload : {}", file.getName());
+        log.info("## upload : {}", file.getSize());
 
-        final String exe = FilenameUtils.getExtension(multipartFile.getOriginalFilename()).toLowerCase();
+        final String exe = FilenameUtils.getExtension(file.getOriginalFilename()).toLowerCase();
         final String key = UUID.randomUUID().toString() + "." + exe;
 
         final ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType(multipartFile.getContentType());
+        objectMetadata.setContentType(file.getContentType());
 
         try {
-            final PutObjectRequest request = new PutObjectRequest(this.bucket, key, multipartFile.getInputStream(), objectMetadata);
+            final PutObjectRequest request = new PutObjectRequest(this.bucket, key, file.getInputStream(), objectMetadata);
 
             return this.amazonS3.putObject(request);
         } catch (final IOException e) {

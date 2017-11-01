@@ -11,6 +11,6 @@ public interface AmazonService {
 
     RecognizeCelebritiesResult celebrity(String key);
 
-    PutObjectResult upload(MultipartFile multipartFile);
+    PutObjectResult upload(MultipartFile file);
 
 }
