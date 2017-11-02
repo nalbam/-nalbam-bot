@@ -17,31 +17,31 @@ import java.util.Map;
 @Service
 public class KorbitServiceImpl implements KorbitService {
 
-    @Value("${nalbam.korbit.username}")
+    @Value("${korbit.username}")
     private String username;
 
-    @Value("${nalbam.trade.sell.per}")
+    @Value("${trade.sell.per}")
     private Float sell_per;
 
-    @Value("${nalbam.trade.sell.amt}")
+    @Value("${trade.sell.amt}")
     private Float sell_amt;
 
-    @Value("${nalbam.trade.sell.min}")
+    @Value("${trade.sell.min}")
     private Float sell_min;
 
-    @Value("${nalbam.trade.sell.sgn}")
+    @Value("${trade.sell.sgn}")
     private Long sell_sgn;
 
-    @Value("${nalbam.trade.buy.per}")
+    @Value("${trade.buy.per}")
     private Float buy_per;
 
-    @Value("${nalbam.trade.buy.amt}")
+    @Value("${trade.buy.amt}")
     private Long buy_amt;
 
-    @Value("${nalbam.trade.buy.min}")
+    @Value("${trade.buy.min}")
     private Long buy_min;
 
-    @Value("${nalbam.trade.buy.sgn}")
+    @Value("${trade.buy.sgn}")
     private Long buy_sgn;
 
     @Autowired

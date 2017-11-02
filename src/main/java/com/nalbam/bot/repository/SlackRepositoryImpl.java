@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class SlackRepositoryImpl implements SlackRepository {
 
-    @Value("${nalbam.slack.webhook}")
+    @Value("${slack.webhook}")
     private String webhook;
 
-    @Value("${nalbam.slack.channel}")
+    @Value("${slack.channel}")
     private String channel;
 
     @Async

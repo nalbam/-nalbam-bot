@@ -21,19 +21,19 @@ import java.util.Map;
 @Component
 public class KorbitRepositoryImpl implements KorbitRepository {
 
-    @Value("${nalbam.korbit.api}")
+    @Value("${korbit.api}")
     private String api;
 
-    @Value("${nalbam.korbit.client_id}")
+    @Value("${korbit.client_id}")
     private String client_id;
 
-    @Value("${nalbam.korbit.client_secret}")
+    @Value("${korbit.client_secret}")
     private String client_secret;
 
-    @Value("${nalbam.korbit.username}")
+    @Value("${korbit.username}")
     private String username;
 
-    @Value("${nalbam.korbit.password}")
+    @Value("${korbit.password}")
     private String password;
 
     @Autowired

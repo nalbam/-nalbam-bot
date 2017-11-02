@@ -13,10 +13,10 @@ import java.util.Map;
 @Component
 public class KorbitTask {
 
-    @Value("${nalbam.korbit.username}")
+    @Value("${korbit.username}")
     private String username;
 
-    @Value("${nalbam.korbit.enabled}")
+    @Value("${korbit.enabled}")
     private Boolean enabled;
 
     @Autowired

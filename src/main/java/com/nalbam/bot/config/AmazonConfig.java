@@ -18,16 +18,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AmazonConfig {
 
-    @Value("${nalbam.aws.accessKey}")
+    @Value("${aws.accessKey}")
     private String accessKey;
 
-    @Value("${nalbam.aws.secretKey}")
+    @Value("${aws.secretKey}")
     private String secretKey;
 
-    @Value("${nalbam.aws.region}")
+    @Value("${aws.region}")
     private String region;
 
-    @Value("${nalbam.aws.sqs.endPoint}")
+    @Value("${aws.sqs.endPoint}")
     private String endPoint;
 
     @Bean

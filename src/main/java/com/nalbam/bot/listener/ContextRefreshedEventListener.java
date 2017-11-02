@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ContextRefreshedEventListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Value("${nalbam.app.name}")
+    @Value("${app.name}")
     private String name;
 
     @Autowired

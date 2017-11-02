@@ -20,13 +20,13 @@ public class QueueServiceImpl implements QueueService {
 
     private String queueUrl;
 
-    @Value("${nalbam.aws.sqs.queueName}")
+    @Value("${aws.sqs.queueName}")
     private String queueName;
 
-    @Value("${nalbam.aws.sqs.maxTimeout}")
+    @Value("${aws.sqs.maxTimeout}")
     private Integer maxTimeout;
 
-    @Value("${nalbam.aws.sqs.maxDelay}")
+    @Value("${aws.sqs.maxDelay}")
     private Integer maxDelay;
 
     @Autowired

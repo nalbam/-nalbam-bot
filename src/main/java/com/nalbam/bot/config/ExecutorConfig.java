@@ -18,7 +18,7 @@ import java.util.concurrent.Executor;
 @Configuration
 public class ExecutorConfig extends AsyncConfigurerSupport {
 
-    @Value("${nalbam.app.name}")
+    @Value("${app.name}")
     private String name;
 
     @Bean

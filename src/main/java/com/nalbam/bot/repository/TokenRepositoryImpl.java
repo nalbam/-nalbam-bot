@@ -14,10 +14,10 @@ import java.util.Map;
 @Component
 public class TokenRepositoryImpl implements TokenRepository {
 
-    @Value("${nalbam.aws.api.url}")
+    @Value("${aws.api.url}")
     private String url;
 
-    @Value("${nalbam.aws.api.key}")
+    @Value("${aws.api.key}")
     private String key;
 
     @Autowired

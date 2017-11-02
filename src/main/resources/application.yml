@@ -7,45 +7,48 @@ spring:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
 
+app:
+  name: bot
+  base: com.nalbam
+
+aws:
+  accessKey: ${AWS_ACCESS_KEY:STRING}
+  secretKey: ${AWS_SECRET_KEY:STRING}
+  region: ${AWS_REGION:us-east-1}
+  bucket: ${AWS_BUCKET:us-east-1.nalbam.com}
+  api:
+    url: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
+    key: ${AWS_API_KEY:STRING}
+  sqs:
+    queueName: bot
+    maxTimeout: ${AWS_SQS_MAX_TIMEOUT:36000}
+    maxDelay: ${AWS_SQS_MAX_DELAY:900}
+    endPoint: sqs.${AWS_REGION:us-east-1}.amazonaws.com
+
+korbit:
+  api: ${KORBIT_API_URL:https://api.korbit.co.kr/v1}
+  client_id: ${KORBIT_ACCESS_KEY:STRING}
+  client_secret: ${KORBIT_SECRET_KEY:STRING}
+  username: ${KORBIT_USERNAME:username}
+  password: ${KORBIT_PASSWORD:password}
+  enabled: false
+
+trade:
+  sell:
+    per: 0.005
+    amt: 0.01
+    min: 0.001
+    sgn: 3
+  buy:
+    per: 0.005
+    amt: 50000
+    min: 5000
+    sgn: 3
+
+slack:
+  webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/web/hook/token}
+  channel: ${SLACK_CHANNEL:sandbox}
+
 logging:
   level:
     com.nalbam: DEBUG
-
-nalbam:
-  app:
-    name: bot
-    base: com.nalbam
-  trade:
-    sell:
-      per: 0.005
-      amt: 0.01
-      min: 0.001
-      sgn: 3
-    buy:
-      per: 0.005
-      amt: 50000
-      min: 5000
-      sgn: 3
-  aws:
-    accessKey: ${AWS_ACCESS_KEY:STRING}
-    secretKey: ${AWS_SECRET_KEY:STRING}
-    region: ${AWS_REGION:us-east-1}
-    bucket: ${AWS_BUCKET:us-east-1.nalbam.com}
-    api:
-      url: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
-      key: ${AWS_API_KEY:STRING}
-    sqs:
-      queueName: bot
-      maxTimeout: ${AWS_SQS_MAX_TIMEOUT:36000}
-      maxDelay: ${AWS_SQS_MAX_DELAY:900}
-      endPoint: sqs.${AWS_REGION:us-east-1}.amazonaws.com
-  korbit:
-    api: ${KORBIT_API_URL:https://api.korbit.co.kr/v1}
-    client_id: ${KORBIT_ACCESS_KEY:STRING}
-    client_secret: ${KORBIT_SECRET_KEY:STRING}
-    username: ${KORBIT_USERNAME:username}
-    password: ${KORBIT_PASSWORD:password}
-    enabled: false
-  slack:
-    webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/web/hook/token}
-    channel: ${SLACK_CHANNEL:sandbox}
