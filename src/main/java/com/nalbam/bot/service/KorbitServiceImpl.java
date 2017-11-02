@@ -169,7 +169,7 @@ public class KorbitServiceImpl implements KorbitService {
             attachment.addField(new SlackAttachment.Field("high", high + " (" + high_low + ")", true));
             attachment.addField(new SlackAttachment.Field("low", low + " (" + low_high + ")", true));
             attachment.addField(new SlackAttachment.Field("last", last.toString(), true));
-            this.slackRepository.send("sandbox", attachment);
+            this.slackRepository.send(attachment);
         }
 
         // 결과
