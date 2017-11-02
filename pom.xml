@@ -24,7 +24,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <!-- nalbam-repo -->
+        <repository-id>nalbam-repo</repository-id>
+        <repository-name>nalbam-repo</repository-name>
+        <repository-url>http://repo.nalbam.com/maven2</repository-url>
+
         <!-- versions -->
+        <nalbam-common.version>0.1.0</nalbam-common.version>
         <aws.version>1.11.213</aws.version>
         <netty.version>4.1.15.Final</netty.version>
         <slack.version>0.0.8</slack.version>
@@ -36,6 +42,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- yanolja common-lib -->
+        <dependency>
+            <groupId>com.nalbam</groupId>
+            <artifactId>nalbam-common</artifactId>
+            <version>${nalbam-common.version}</version>
         </dependency>
 
         <!-- apache-commons -->
