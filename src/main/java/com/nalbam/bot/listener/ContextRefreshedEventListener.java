@@ -1,7 +1,7 @@
 package com.nalbam.bot.listener;
 
 import com.nalbam.bot.repository.SlackRepository;
-import in.ashwanthkumar.slack.webhook.SlackAttachment;
+import in.ashwanthkumar.slack.webhook.SlackMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,9 +23,8 @@ public class ContextRefreshedEventListener implements ApplicationListener<Contex
     public void onApplicationEvent(final ContextRefreshedEvent event) {
         log.info("Context refreshed : [{}]", this.name);
 
-        final SlackAttachment attachment = new SlackAttachment("Context refreshed");
-        attachment.addField(new SlackAttachment.Field("name", this.name, true));
-        this.slackRepository.send(attachment);
+        final SlackMessage message = new SlackMessage("Context refreshed ").quote(this.name);
+        this.slackRepository.send(message);
     }
 
 }
