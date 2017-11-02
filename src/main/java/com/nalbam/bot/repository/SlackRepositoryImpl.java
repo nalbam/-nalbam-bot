@@ -28,8 +28,9 @@ public class SlackRepositoryImpl implements SlackRepository {
     public void send(final String channel, final SlackAttachment attachment) {
         try {
             new Slack(this.webhook).sendToChannel(channel).push(attachment);
+            log.info("slack send : {}", attachment.getText());
         } catch (final Exception e) {
-            log.info("slack send error {}", e.getMessage());
+            log.info("slack send error : {}", e.getMessage());
         }
     }
 
