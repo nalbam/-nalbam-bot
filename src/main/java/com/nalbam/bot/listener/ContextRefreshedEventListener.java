@@ -29,7 +29,7 @@ public class ContextRefreshedEventListener implements ApplicationListener<Contex
         final Map<String, String> data = PackageUtil.getData(this.getClass());
 
         final SlackMessage message = new SlackMessage("Context refreshed ")
-                .quote(this.name).text(" ").quote(data.get("version"));
+                .code(this.name).text(" ").code(data.get("version"));
         this.slackRepository.send(message);
     }
 
