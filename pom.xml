@@ -117,10 +117,10 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- devtools -->
+        <!-- actuator -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
+            <artifactId>spring-boot-actuator</artifactId>
             <optional>true</optional>
         </dependency>
 
