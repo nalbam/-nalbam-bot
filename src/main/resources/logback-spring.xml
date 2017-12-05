@@ -26,8 +26,6 @@
 
     <appender name="Logzio" class="io.logz.logback.LogzioLogbackAppender">
         <token>${token}</token>
-        <logzioUrl>https://listener.logz.io:8071</logzioUrl>
-        <logzioType>${product}</logzioType>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
