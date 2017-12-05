@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class ContextRefreshedEventListener implements ApplicationListener<ContextRefreshedEvent> {
+public class RefreshedEventListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Value("${app.product}")
     private String product;
