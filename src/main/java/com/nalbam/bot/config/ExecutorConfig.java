@@ -18,7 +18,7 @@ import java.util.concurrent.Executor;
 @Configuration
 public class ExecutorConfig extends AsyncConfigurerSupport {
 
-    @Value("${app.name}")
+    @Value("${app.product}")
     private String name;
 
     @Bean
