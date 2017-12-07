@@ -37,4 +37,4 @@ deployment:
     branch: master
     commands:
       - ~/toaster/toast.sh publish beanstalk
-      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-prod
+      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-master
