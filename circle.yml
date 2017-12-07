@@ -9,12 +9,12 @@ dependencies:
   pre:
     - curl -s toast.sh/install-v3 | bash
   post:
-    - ~/toaster/toast.sh c REGION us-east-1
-    - ~/toaster/toast.sh c BUCKET virginia.me17.com
+    - ~/toaster/toast.sh config REGION us-east-1
+    - ~/toaster/toast.sh config BUCKET virginia.me17.com
 
 compile:
   pre:
-    - ~/toaster/toast.sh v $CIRCLE_BRANCH
+    - ~/toaster/toast.sh version $CIRCLE_BRANCH $CIRCLE_BUILD_NUM
   override:
     - mvn clean package -DskipTests
   post:
@@ -24,10 +24,10 @@ deployment:
   development:
     branch: /^(?!master$).*$/
     commands:
-      - ~/toaster/toast.sh p eb
-      - ~/toaster/toast.sh d eb
+      - ~/toaster/toast.sh publish beanstalk
+      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-dev
   production:
     branch: master
     commands:
-      - ~/toaster/toast.sh p eb
-      - ~/toaster/toast.sh d eb
+      - ~/toaster/toast.sh publish beanstalk
+      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-master
