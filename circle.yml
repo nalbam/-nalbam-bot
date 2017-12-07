@@ -16,11 +16,7 @@ dependencies:
 
 compile:
   pre:
-<<<<<<< HEAD
     - ~/toaster/toast.sh version $CIRCLE_BRANCH $CIRCLE_BUILD_NUM
-=======
-    - ~/toaster/toast.sh version $CIRCLE_BRANCH $CIRCLE_TAG
->>>>>>> ff526af981664ba9102157a967815ead3f98ba19
   override:
     - mvn clean package -DskipTests
   post:
