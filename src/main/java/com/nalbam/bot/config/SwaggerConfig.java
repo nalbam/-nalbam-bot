@@ -16,21 +16,21 @@ import java.util.ArrayList;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Value("${app.base}")
-    private String base;
+    @Value("${app.product}")
+    private String title;
 
-    @Value("${app.name}")
-    private String name;
+    @Value("${app.package}")
+    private String basePackage;
 
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(this.base))
+                .apis(RequestHandlerSelectors.basePackage(this.basePackage))
                 .paths(PathSelectors.any())
                 .build()
                 //.ignoredParameterTypes(Pageable.class)
-                .apiInfo(new ApiInfo(this.name, "", "", "", ApiInfo.DEFAULT_CONTACT, "", "", new ArrayList<>()));
+                .apiInfo(new ApiInfo(this.title, "", "", "", ApiInfo.DEFAULT_CONTACT, "", "", new ArrayList<>()));
     }
 
 }

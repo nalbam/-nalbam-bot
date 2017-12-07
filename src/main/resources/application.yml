@@ -8,8 +8,9 @@ spring:
       WRITE_DATES_AS_TIMESTAMPS: false
 
 app:
-  name: bot
-  base: com.nalbam
+  product: bot
+  package: com.nalbam
+  profile: ${PROFILE:default}
 
 aws:
   accessKey: ${AWS_ACCESS_KEY:STRING}
@@ -48,6 +49,9 @@ trade:
 slack:
   webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/web/hook/token}
   channel: ${SLACK_CHANNEL:sandbox}
+
+logzio:
+  token: ${LOGZIO_TOKEN:STRING}
 
 logging:
   level:

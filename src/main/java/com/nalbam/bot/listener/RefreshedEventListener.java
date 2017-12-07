@@ -14,22 +14,25 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class ContextRefreshedEventListener implements ApplicationListener<ContextRefreshedEvent> {
+public class RefreshedEventListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Value("${app.name}")
-    private String name;
+    @Value("${app.product}")
+    private String product;
+
+    @Value("${app.profile}")
+    private String profile;
 
     @Autowired
     private SlackRepository slackRepository;
 
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
-        log.info("Context refreshed : [{}]", this.name);
+        log.info("Context refreshed : [{}] [{}]", this.product, this.profile);
 
         final Map<String, String> data = PackageUtil.getData(this.getClass());
 
         final SlackMessage message = new SlackMessage("Context refreshed ")
-                .code(this.name).text(" ").code(data.get("version"));
+                .code(this.product).text(" ").code(this.profile).text(" ").code(data.get("version"));
         this.slackRepository.send(message);
     }
 

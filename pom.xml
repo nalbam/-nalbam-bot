@@ -43,6 +43,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
 
         <!-- yanolja common-lib -->
         <dependency>
@@ -84,13 +88,6 @@
             <version>1.0.0</version>
         </dependency>
 
-        <!-- logzio -->
-        <dependency>
-            <groupId>io.logz.logback</groupId>
-            <artifactId>logzio-logback-appender</artifactId>
-            <version>1.0.11</version>
-        </dependency>
-
         <!-- slack -->
         <dependency>
             <groupId>in.ashwanthkumar</groupId>
@@ -108,6 +105,20 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
+        </dependency>
+
+        <!-- logstash -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>4.11</version>
+        </dependency>
+
+        <!-- logzio -->
+        <dependency>
+            <groupId>io.logz.logback</groupId>
+            <artifactId>logzio-logback-appender</artifactId>
+            <version>1.0.11</version>
         </dependency>
 
         <!-- lombok -->

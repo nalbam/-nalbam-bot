@@ -2,35 +2,45 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
+    <springProperty scope="context" name="product" source="spring.application.name"/>
+    <springProperty scope="context" name="profile" source="spring.profiles.active"/>
+    <springProperty scope="context" name="token" source="logzio.token"/>
+
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
 
     <appender name="ROLLIN" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>spring.nalbam-bot.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>spring.${product}.%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
         <encoder>
-            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level --- [%-21.21thread] %-35.35logger{35} : %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level --- [%-21.21thread] %-35.35logger{35} : %m%n</pattern>
         </encoder>
     </appender>
 
-    <appender name="LogzioLogbackAppender" class="io.logz.logback.LogzioLogbackAppender">
-        <token>YejLQrNIyUHiuQwXeskpNdWdAHpzJpbe</token>
-        <logzioUrl>https://listener.logz.io:8071</logzioUrl>
-        <logzioType>nalbam-bot</logzioType>
+    <appender name="Logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>10.0.0.212:5044</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"product":"${product}","profile":"${profile}"}</customFields>
+        </encoder>
+    </appender>
+
+    <appender name="Logzio" class="io.logz.logback.LogzioLogbackAppender">
+        <token>${token}</token>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
     </appender>
 
-    <root level="INFO">
-        <appender-ref ref="ROLLIN"/>
-    </root>
+    <springProfile name="default">
+        <root level="INFO">
+            <appender-ref ref="ROLLIN"/>
+        </root>
+    </springProfile>
 
-    <root level="INFO">
-        <!-- IMPORTANT: make sure to include this line, otherwise the appender won't be used -->
-        <appender-ref ref="LogzioLogbackAppender"/>
-    </root>
-
-    <logger name="org.nalbam" level="DEBUG"/>
-    <logger name="org.springframework.web" level="INFO"/>
+    <springProfile name="dev, prod">
+        <root level="WARN">
+            <appender-ref ref="ROLLIN"/>
+            <appender-ref ref="Logzio"/>
+        </root>
+    </springProfile>
 </configuration>
