@@ -30,9 +30,8 @@
         <repository-url>http://repo.nalbam.com/maven2</repository-url>
 
         <!-- versions -->
-        <nalbam-common.version>0.1.1</nalbam-common.version>
+        <nalbam.version>0.2.0.94</nalbam.version>
         <aws.version>1.11.213</aws.version>
-        <netty.version>4.1.15.Final</netty.version>
         <slack.version>0.0.8</slack.version>
         <swagger.version>2.7.0</swagger.version>
     </properties>
@@ -52,7 +51,7 @@
         <dependency>
             <groupId>com.nalbam</groupId>
             <artifactId>nalbam-common</artifactId>
-            <version>${nalbam-common.version}</version>
+            <version>${nalbam.version}</version>
         </dependency>
 
         <!-- apache-commons -->
@@ -65,13 +64,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
-        </dependency>
-
-        <!-- netty -->
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>${netty.version}</version>
         </dependency>
 
         <!-- aws -->
