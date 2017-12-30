@@ -20,13 +20,13 @@ public class SwaggerConfig {
     private String title;
 
     @Value("${app.package}")
-    private String basePackage;
+    private String base;
 
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(this.basePackage))
+                .apis(RequestHandlerSelectors.basePackage(this.base))
                 .paths(PathSelectors.any())
                 .build()
                 //.ignoredParameterTypes(Pageable.class)
