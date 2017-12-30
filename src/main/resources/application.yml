@@ -26,6 +26,12 @@ aws:
     maxDelay: ${AWS_SQS_MAX_DELAY:900}
     endPoint: sqs.${AWS_REGION:us-east-1}.amazonaws.com
 
+coinone:
+  api: ${COINONE_API_URL:https://api.coinone.co.kr/v2}
+  access_token: ${COINONE_ACCESS_TOKEN:STRING}
+  secret_key: ${COINONE_SECRET_KEY:STRING}
+  enabled: false
+
 korbit:
   api: ${KORBIT_API_URL:https://api.korbit.co.kr/v1}
   client_id: ${KORBIT_ACCESS_KEY:STRING}

@@ -39,6 +39,7 @@
 
     <springProfile name="dev, prod">
         <root level="INFO">
+            <appender-ref ref="ROLLIN"/>
             <appender-ref ref="Logzio"/>
         </root>
     </springProfile>
