@@ -8,8 +8,8 @@ spring:
       WRITE_DATES_AS_TIMESTAMPS: false
 
 app:
-  product: bot
   package: com.nalbam
+  product: nalbam-bot
   profile: ${PROFILE:default}
 
 aws:
