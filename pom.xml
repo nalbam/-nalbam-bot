@@ -8,9 +8,6 @@
     <version>0.0.0</version>
     <packaging>jar</packaging>
 
-    <name>nalbam-bot</name>
-    <description>Demo project for Spring Boot</description>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -30,10 +27,9 @@
         <repository-url>http://repo.nalbam.com/maven2</repository-url>
 
         <!-- versions -->
-        <nalbam.version>0.2.0.94</nalbam.version>
-        <aws.version>1.11.213</aws.version>
-        <slack.version>0.0.8</slack.version>
+        <nalbam.version>0.2.1-97</nalbam.version>
         <swagger.version>2.7.0</swagger.version>
+        <aws.version>1.11.213</aws.version>
     </properties>
 
     <dependencies>
@@ -54,18 +50,6 @@
             <version>${nalbam.version}</version>
         </dependency>
 
-        <!-- apache-commons -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.6</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.5</version>
-        </dependency>
-
         <!-- aws -->
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -78,13 +62,6 @@
             <groupId>com.google.gcm</groupId>
             <artifactId>gcm-server</artifactId>
             <version>1.0.0</version>
-        </dependency>
-
-        <!-- slack -->
-        <dependency>
-            <groupId>in.ashwanthkumar</groupId>
-            <artifactId>slack-java-webhook</artifactId>
-            <version>${slack.version}</version>
         </dependency>
 
         <!-- swagger -->
