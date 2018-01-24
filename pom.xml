@@ -47,7 +47,7 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- nalbam common-lib -->
+        <!-- nalbam-common -->
         <dependency>
             <groupId>com.nalbam</groupId>
             <artifactId>nalbam-common</artifactId>
