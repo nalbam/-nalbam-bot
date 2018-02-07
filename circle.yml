@@ -13,8 +13,6 @@ dependencies:
   post:
     - ~/toaster/toast.sh config REGION us-east-1
     - ~/toaster/toast.sh config BUCKET repo-virginia.me17.com
-  cache_directories:
-    - ~/.m2
 
 compile:
   pre:
