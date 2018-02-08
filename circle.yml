@@ -15,6 +15,7 @@ dependencies:
     - ~/toaster/toast.sh config REGION us-east-1
     - ~/toaster/toast.sh config BUCKET repo-virginia.me17.com
 
+
 compile:
   pre:
     - ~/toaster/toast.sh version $CIRCLE_BRANCH $CIRCLE_BUILD_NUM
