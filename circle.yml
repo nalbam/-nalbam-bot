@@ -4,6 +4,7 @@ machine:
     version: oraclejdk8
   services:
     - redis
+    - docker
   environment:
     CONFIG_SERVER: http://localhost:8888
 
@@ -15,6 +16,7 @@ dependencies:
   post:
     - ~/toaster/toast.sh config REGION us-east-1
     - ~/toaster/toast.sh config BUCKET repo-virginia.me17.com
+    - ~/toaster/toast.sh config REPOSITORY 267226807554.dkr.ecr.ap-northeast-2.amazonaws.com
 
 compile:
   pre:
@@ -41,6 +43,7 @@ deployment:
   production:
     branch: master
     commands:
+      - ~/toaster/toast.sh publish docker ECR
       - ~/toaster/toast.sh publish beanstalk
       - ~/toaster/toast.sh deploy beanstalk nalbam-bot-master
 
