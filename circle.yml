@@ -14,7 +14,6 @@ dependencies:
   post:
     - ~/toaster/toast.sh config REGION us-east-1
     - ~/toaster/toast.sh config BUCKET repo-virginia.me17.com
-#    - ~/toaster/toast.sh config USERID 152862257388
 
 compile:
   pre:
