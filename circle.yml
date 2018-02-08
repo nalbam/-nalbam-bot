@@ -14,7 +14,7 @@ dependencies:
   post:
     - ~/toaster/toast.sh config REGION us-east-1
     - ~/toaster/toast.sh config BUCKET repo-virginia.me17.com
-    - ~/toaster/toast.sh config USERID 152862257388
+#    - ~/toaster/toast.sh config USERID 152862257388
 
 compile:
   pre:
@@ -42,7 +42,7 @@ deployment:
     branch: master
     commands:
       - ~/toaster/toast.sh publish docker ECR
-#      - ~/toaster/toast.sh publish beanstalk
+      - ~/toaster/toast.sh publish beanstalk
 #      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-master
 
 general:
