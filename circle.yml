@@ -14,7 +14,7 @@ dependencies:
   post:
     - ~/toaster/toast.sh config REGION us-east-1
     - ~/toaster/toast.sh config BUCKET repo-virginia.me17.com
-    - ~/toaster/toast.sh config REPOSITORY 267226807554.dkr.ecr.ap-northeast-2.amazonaws.com
+    - ~/toaster/toast.sh config REPOSITORY 152862257388.dkr.ecr.us-east-1.amazonaws.com
 
 compile:
   pre:
