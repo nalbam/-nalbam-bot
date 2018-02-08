@@ -11,7 +11,7 @@ dependencies:
   pre:
     - curl -s toast.sh/install-v3 | bash
   override:
-    - mvn dependency:get
+    - mvn dependency:copy-dependencies
   post:
     - ~/toaster/toast.sh config REGION us-east-1
     - ~/toaster/toast.sh config BUCKET repo-virginia.me17.com
