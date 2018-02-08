@@ -11,8 +11,6 @@ machine:
 dependencies:
   pre:
     - curl -s toast.sh/install-v3 | bash
-  override:
-    - mvn dependency:copy-dependencies
   post:
     - ~/toaster/toast.sh config REGION us-east-1
     - ~/toaster/toast.sh config BUCKET repo-virginia.me17.com
@@ -22,7 +20,7 @@ compile:
   pre:
     - ~/toaster/toast.sh version $CIRCLE_BRANCH $CIRCLE_BUILD_NUM
   override:
-    - mvn clean package -DskipTests
+    - mvn package -DskipTests
   post:
     - ls -al target
 
