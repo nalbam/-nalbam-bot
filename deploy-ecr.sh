@@ -39,7 +39,9 @@ docker images
 
 echo_ "docker login..."
 
-eval $(aws ecr get-login --region ${REGION} --no-include-email)
+# --no-include-email
+ECR_LOGIN=$(aws ecr get-login --region ${REGION})
+#eval ${ECR_LOGIN}
 
 echo_ "docker push... [${ARTIFACT_ID}]"
 
