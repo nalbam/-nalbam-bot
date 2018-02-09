@@ -5,8 +5,12 @@ nothing() {
     REGION=
 }
 
-error() {
+echo_() {
     echo -e "$1"
+}
+
+error() {
+    echo_ "$1"
     exit 1
 }
 
