@@ -41,7 +41,7 @@ echo_ "docker login..."
 
 # --no-include-email
 ECR_LOGIN=$(aws ecr get-login --region ${REGION})
-#eval ${ECR_LOGIN}
+eval ${ECR_LOGIN}
 
 echo_ "docker push... [${ARTIFACT_ID}]"
 
