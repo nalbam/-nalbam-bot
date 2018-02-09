@@ -41,7 +41,7 @@ deployment:
     branch: master
     commands:
       - ~/toaster/toast.sh publish docker ECR
-      - ~/toaster/toast.sh publish beanstalk
+#      - ~/toaster/toast.sh publish beanstalk
 #      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-master
 
 general:
