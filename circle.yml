@@ -40,11 +40,9 @@ deployment:
   production:
     branch: master
     commands:
-      - ~/toaster/toast.sh publish docker ECR
       - ~/toaster/toast.sh publish beanstalk
-      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-master
-#      - chmod 755 ./deploy-ecr.sh
-#      - ./deploy-ecr.sh
+      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-prod
+      - ~/toaster/toast.sh publish docker ECR
 
 general:
   artifacts:
