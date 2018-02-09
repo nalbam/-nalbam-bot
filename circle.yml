@@ -27,11 +27,9 @@ test:
   pre:
     - python -m SimpleHTTPServer 8888:
         background: true
-  override:
-    - echo pass
-#  post:
-#    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-#    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
 
 deployment:
   development:
@@ -42,11 +40,11 @@ deployment:
   production:
     branch: master
     commands:
+      - ~/toaster/toast.sh publish docker ECR
       - ~/toaster/toast.sh publish beanstalk
-#      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-master
-#      - ~/toaster/toast.sh publish docker ECR
-      - chmod 755 ./deploy-ecr.sh
-      - ./deploy-ecr.sh
+      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-master
+#      - chmod 755 ./deploy-ecr.sh
+#      - ./deploy-ecr.sh
 
 general:
   artifacts:
