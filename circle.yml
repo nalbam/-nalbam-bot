@@ -45,6 +45,7 @@ deployment:
       - ~/toaster/toast.sh publish beanstalk
 #      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-master
 #      - ~/toaster/toast.sh publish docker ECR
+      - chmod 755 ./deploy-ecr.sh
       - ./deploy-ecr.sh
 
 general:
