@@ -1,10 +1,5 @@
 #!/bin/bash
 
-nothing() {
-    USERID=
-    REGION=
-}
-
 echo_() {
     echo -e "$1"
 }
@@ -14,7 +9,10 @@ error() {
     exit 1
 }
 
+################################################################################
+
 REGION=us-east-1
+USERID=152862257388
 
 ARTIFACT_ID=nalbam-bot
 VERSION=0.0.0
@@ -41,8 +39,7 @@ docker images
 
 echo_ "docker login..."
 
-ECR_LOGIN=$(aws ecr get-login --region ${REGION} --no-include-email)
-#${ECR_LOGIN}
+eval $(aws ecr get-login --region ${REGION} --no-include-email)
 
 echo_ "docker push... [${ARTIFACT_ID}]"
 
