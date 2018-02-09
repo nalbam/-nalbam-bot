@@ -36,7 +36,7 @@ deployment:
     branch: /^(?!master$).*$/
     commands:
       - ~/toaster/toast.sh publish beanstalk
-      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-dev
+#      - ~/toaster/toast.sh deploy beanstalk nalbam-bot-dev
   production:
     branch: master
     commands:
