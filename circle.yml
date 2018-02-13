@@ -13,7 +13,7 @@ dependencies:
     - curl -s toast.sh/install-v3 | bash
   post:
     - ~/toaster/toast.sh config REGION us-east-1
-    - ~/toaster/toast.sh config BUCKET repo-virginia.me17.com
+    - ~/toaster/toast.sh config BUCKET repo-me17-virginia
 
 compile:
   pre:
