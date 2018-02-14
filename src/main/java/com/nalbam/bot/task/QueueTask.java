@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -27,13 +24,16 @@ public class QueueTask {
 
     @Scheduled(fixedRate = 1000)
     public void send() {
-        Map<String, String> map = new HashMap<>();
-        map.put("url", "http://nalbam-bot-prod.us-east-1.elasticbeanstalk.com/health");
+        Map<String, String> data = new HashMap<>();
+        data.put("url", "http://nalbam-bot-prod.us-east-1.elasticbeanstalk.com/health");
+
+        List<String> tokens = new ArrayList<>();
 
         Queue queue = new Queue();
         queue.setType('2');
         queue.setDelay(0);
-        queue.setData(map);
+        queue.setData(data);
+        queue.setTokens(tokens);
 
         this.queueService.send(queue)
                 .exceptionally(e -> {
