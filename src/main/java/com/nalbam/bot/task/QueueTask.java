@@ -17,6 +17,12 @@ import java.util.*;
 @Component
 public class QueueTask {
 
+    @Value("${app.product}")
+    private String product;
+
+    @Value("${app.profile}")
+    private String profile;
+
     @Value("${aws.region}")
     private String region;
 
@@ -29,7 +35,7 @@ public class QueueTask {
     @Scheduled(fixedRate = 1000)
     public void send() {
         Map<String, String> data = new HashMap<>();
-        data.put("url", "http://nalbam-bot-prod." + region + ".elasticbeanstalk.com/health");
+        data.put("url", "http://" + product + "-" + profile + "." + region + ".elasticbeanstalk.com/health");
 
         List<String> tokens = new ArrayList<>();
 

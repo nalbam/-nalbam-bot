@@ -26,8 +26,8 @@ public class RefreshedEventListener implements ApplicationListener<ContextRefres
     private SlackRepository slackRepository;
 
     @Override
-    public void onApplicationEvent(final ContextRefreshedEvent event) {
-        log.info("Context refreshed : [{}] [{}]", this.product, this.profile);
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        log.info("Context refreshed : [{}] [{}] [{}]", this.product, this.profile, event.getTimestamp());
 
         final Map<String, String> data = PackageUtil.getData(this.getClass());
 

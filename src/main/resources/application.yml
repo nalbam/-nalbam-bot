@@ -13,10 +13,11 @@ app:
   profile: ${PROFILE:default}
 
 aws:
-  accessKey: ${AWS_ACCESS_KEY:STRING}
-  secretKey: ${AWS_SECRET_KEY:STRING}
   region: ${AWS_REGION:ap-northeast-2}
   bucket: ${AWS_BUCKET:repo-me17-seoul}
+  key:
+    access: ${AWS_ACCESS_KEY:STRING}
+    secret: ${AWS_SECRET_KEY:STRING}
   api:
     url: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
     key: ${AWS_API_KEY:STRING}
