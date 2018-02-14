@@ -2,8 +2,8 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <springProperty scope="context" name="product" source="spring.application.name"/>
-    <springProperty scope="context" name="profile" source="spring.profiles.active"/>
+    <springProperty scope="context" name="product" source="app.product"/>
+    <springProperty scope="context" name="profile" source="app.profile"/>
     <springProperty scope="context" name="token" source="logzio.token"/>
 
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
