@@ -37,13 +37,12 @@ public class QueueTask {
         Map<String, String> data = new HashMap<>();
         data.put("url", "http://" + product + "-" + profile + "." + region + ".elasticbeanstalk.com/health");
 
-        List<String> tokens = new ArrayList<>();
-
         Queue queue = new Queue();
         queue.setType('2');
         queue.setDelay(0);
         queue.setData(data);
-        queue.setTokens(tokens);
+        queue.setTokens(new ArrayList<>());
+        queue.setRegistered(new Date());
 
         this.queueService.send(queue)
                 .exceptionally(e -> {
