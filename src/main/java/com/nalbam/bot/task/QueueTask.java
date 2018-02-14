@@ -7,6 +7,7 @@ import com.nalbam.bot.service.QueueService;
 import com.nalbam.bot.service.SendService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,9 @@ import java.util.*;
 @Slf4j
 @Component
 public class QueueTask {
+
+    @Value("${aws.region}")
+    private String region;
 
     @Autowired
     private QueueService queueService;
@@ -25,7 +29,7 @@ public class QueueTask {
     @Scheduled(fixedRate = 1000)
     public void send() {
         Map<String, String> data = new HashMap<>();
-        data.put("url", "http://nalbam-bot-prod.us-east-1.elasticbeanstalk.com/health");
+        data.put("url", "http://nalbam-bot-prod." + region + ".elasticbeanstalk.com/health");
 
         List<String> tokens = new ArrayList<>();
 

@@ -15,8 +15,8 @@ app:
 aws:
   accessKey: ${AWS_ACCESS_KEY:STRING}
   secretKey: ${AWS_SECRET_KEY:STRING}
-  region: ${AWS_REGION:us-east-1}
-  bucket: ${AWS_BUCKET:repo-me17-virginia}
+  region: ${AWS_REGION:ap-northeast-2}
+  bucket: ${AWS_BUCKET:repo-me17-seoul}
   api:
     url: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
     key: ${AWS_API_KEY:STRING}
@@ -24,7 +24,7 @@ aws:
     queueName: bot
     maxTimeout: ${AWS_SQS_MAX_TIMEOUT:36000}
     maxDelay: ${AWS_SQS_MAX_DELAY:900}
-    endPoint: sqs.${AWS_REGION:us-east-1}.amazonaws.com
+    endPoint: sqs.${AWS_REGION:ap-northeast-2}.amazonaws.com
 
 coinone:
   api: ${COINONE_API_URL:https://api.coinone.co.kr/v2}
