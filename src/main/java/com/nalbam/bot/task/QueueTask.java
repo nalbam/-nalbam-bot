@@ -81,24 +81,28 @@ public class QueueTask {
 
                 log.info("Queue receive : {}", message.getMessageId());
 
-                // 발송시간 = 예약시간 + delay
-                delay = (queue.getDelay() * 1000) - new Date().getTime();
+                try {
+                    // 발송시간 = 예약시간 + delay
+                    delay = (queue.getDelay() * 1000) - new Date().getTime();
 
-                if (queue.getReserved() != null) {
-                    delay = delay + queue.getReserved().getTime();
-                } else {
-                    delay = delay + queue.getRegistered().getTime();
-                }
+                    if (queue.getReserved() != null) {
+                        delay = delay + queue.getReserved().getTime();
+                    } else {
+                        delay = delay + queue.getRegistered().getTime();
+                    }
 
-                log.info("Queue receive : [{}] [delay:{}]", queue.getData(), milToSec(delay));
+                    log.info("Queue receive : [{}] [delay:{}]", queue.getData(), milToSec(delay));
 
-                if (delay < 1000) {
+                    if (delay > 1000) {
+                        // 연기
+                        this.queueService.changeVisibility(message.getReceiptHandle(), milToSec(delay));
+                        continue;
+                    }
+
                     // 발송
                     this.sendService.send(queue);
-                } else {
-                    // 연기
-                    this.queueService.changeVisibility(message.getReceiptHandle(), milToSec(delay));
-                    continue;
+                } catch (Exception e) {
+                    log.error("Queue receive : {}", e.getMessage());
                 }
 
                 // 삭제
