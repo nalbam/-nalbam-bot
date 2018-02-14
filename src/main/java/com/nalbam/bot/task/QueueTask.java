@@ -81,7 +81,7 @@ public class QueueTask {
                     delay = delay + queue.getRegistered().getTime();
                 }
 
-                log.info("Queue receive : [{}] [delay:{}] {}", queue.getData(), milToSec(delay), queue.getTokens().size());
+                log.info("Queue receive : [{}] [delay:{}]", queue.getData(), milToSec(delay));
 
                 if (delay < 1000) {
                     // 발송

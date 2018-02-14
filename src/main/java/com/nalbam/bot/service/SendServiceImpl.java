@@ -25,7 +25,7 @@ class SendServiceImpl implements SendService {
     @Async
     @Override
     public void send(final Queue queue) {
-        log.info("Send send [{}] [tokens:{}]", queue.getType(), queue.getTokens().size());
+        log.info("Send send [{}]", queue.getType());
 
         switch (queue.getType()) {
             case '1':
