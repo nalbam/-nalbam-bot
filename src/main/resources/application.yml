@@ -16,7 +16,7 @@ aws:
   accessKey: ${AWS_ACCESS_KEY:STRING}
   secretKey: ${AWS_SECRET_KEY:STRING}
   region: ${AWS_REGION:us-east-1}
-  bucket: ${AWS_BUCKET:us-east-1.nalbam.com}
+  bucket: ${AWS_BUCKET:repo-me17-virginia}
   api:
     url: ${AWS_API_URL:https://au43186kfk.execute-api.ap-northeast-2.amazonaws.com/prod}
     key: ${AWS_API_KEY:STRING}
