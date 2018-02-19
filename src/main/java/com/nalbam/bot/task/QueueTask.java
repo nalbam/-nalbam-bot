@@ -32,7 +32,7 @@ public class QueueTask {
     @Autowired
     private SendService sendService;
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 60000)
     public void send() {
         Map<String, String> data = new HashMap<>();
         data.put("url", "http://" + product + "-" + profile + "." + region + ".elasticbeanstalk.com/health");
