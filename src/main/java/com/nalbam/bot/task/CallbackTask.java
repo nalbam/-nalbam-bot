@@ -30,9 +30,23 @@ public class CallbackTask {
     private SendService sendService;
 
     @Scheduled(fixedRate = 1000)
-    public void callback() {
+    public void call_me() {
+        call("http://" + product + "-" + profile + "." + region + ".elasticbeanstalk.com/health");
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void call_web() {
+        call("http://web1-1014253005.ap-northeast-2.elb.amazonaws.com/");
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void call_spring() {
+        call("http://spring1-33004419.ap-northeast-2.elb.amazonaws.com/");
+    }
+
+    private void call(String url) {
         Map<String, String> data = new HashMap<>();
-        data.put("url", "http://" + product + "-" + profile + "." + region + ".elasticbeanstalk.com/health");
+        data.put("url", url);
 
         Queue queue = new Queue();
         queue.setType('2');

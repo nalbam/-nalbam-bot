@@ -12,6 +12,13 @@ app:
   product: nalbam-bot
   profile: ${PROFILE:default}
 
+slack:
+  webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/web/hook/token}
+  channel: ${SLACK_CHANNEL:sandbox}
+
+logzio:
+  token: ${LOGZIO_TOKEN:STRING}
+
 aws:
   region: ${AWS_REGION:ap-northeast-2}
   bucket: ${AWS_BUCKET:repo-me17-seoul}
@@ -52,13 +59,6 @@ trade:
     amt: 50000
     min: 5000
     sgn: 3
-
-slack:
-  webhook: ${SLACK_WEBHOOK:https://hooks.slack.com/services/web/hook/token}
-  channel: ${SLACK_CHANNEL:sandbox}
-
-logzio:
-  token: ${LOGZIO_TOKEN:STRING}
 
 logging:
   level:
