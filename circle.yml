@@ -19,7 +19,7 @@ compile:
   pre:
     - ~/toaster/toast.sh version $CIRCLE_BRANCH $CIRCLE_BUILD_NUM
   override:
-    - mvn package shade:shade -DskipTests
+    - mvn package -DskipTests
   post:
     - ls -alh target
 
