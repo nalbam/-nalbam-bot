@@ -11,7 +11,7 @@ phases:
       - ~/toaster/toast.sh version $CODEBUILD_SOURCE_VERSION
   build:
     commands:
-      - mvn package
+      - mvn clean package shade:shade
   post_build:
     commands:
       - ~/toaster/toast.sh publish beanstalk
