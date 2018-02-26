@@ -20,7 +20,7 @@ build:
   image: maven:latest
   script:
     - ~/toaster/toast.sh version
-    - ~/toaster/toast.sh build maven
+    - mvn clean package
   artifacts:
     paths:
       - target/
