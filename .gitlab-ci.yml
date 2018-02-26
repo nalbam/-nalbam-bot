@@ -22,7 +22,7 @@ deploy:
   image: python:latest
   script:
     - pip install awscli
-    - ~/toaster/toast.sh publish bucket
+    - ~/toaster/toast.sh releases beanstalk
 
 after_script:
   - ls -al target
