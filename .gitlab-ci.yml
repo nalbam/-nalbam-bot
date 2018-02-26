@@ -19,7 +19,6 @@ build:
   stage: build
   image: maven:latest
   script:
-    - ~/toaster/toast.sh build version
     - mvn clean package
   artifacts:
     paths:
