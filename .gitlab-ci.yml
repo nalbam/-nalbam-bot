@@ -19,7 +19,7 @@ build:
   stage: build
   image: maven:latest
   script:
-    - ~/toaster/toast.sh version
+    - ~/toaster/toast.sh build version
     - mvn clean package
   artifacts:
     paths:
@@ -34,4 +34,4 @@ deploy:
     - ~/toaster/toast.sh releases beanstalk
 
 after_script:
-  - ls -al target
+  - ls -alh target
