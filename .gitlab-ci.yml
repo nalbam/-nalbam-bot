@@ -1,5 +1,13 @@
 # gitlab-ci
 
+variables:
+  MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=./.m2/repository"
+
+cache:
+  paths:
+    - ./.m2/repository
+  key: "$CI_BUILD_REF_NAME"
+
 stages:
   - build
   - deploy
