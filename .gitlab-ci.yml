@@ -10,6 +10,7 @@ cache:
 
 stages:
   - build
+  - releases
   - deploy
 
 before_script:
@@ -25,12 +26,22 @@ build:
     paths:
       - target/
 
-deploy:
-  stage: deploy
+releases:
+  stage: releases
   image: python:latest
   script:
     - pip install awscli
     - ~/toaster/toast.sh prepare
+    - ~/toaster/toast.sh releases beanstalk
+
+deploy:
+  stage: deploy
+  image: python:latest
+  when: manual
+  only:
+    - master
+  script:
+    - pip install awscli
     - ~/toaster/toast.sh deploy beanstalk nalbam-bot-prod
 
 after_script:
