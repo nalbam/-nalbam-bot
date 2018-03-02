@@ -32,6 +32,9 @@ releases:
     - pip install awscli
     - ~/toaster/toast.sh prepare
     - ~/toaster/toast.sh releases beanstalk LatestVersion
+  artifacts:
+    paths:
+      - target/
 
 deploy:
   stage: deploy
