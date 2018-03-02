@@ -31,7 +31,7 @@ releases:
   script:
     - pip install awscli
     - ~/toaster/toast.sh prepare
-    - ~/toaster/toast.sh releases beanstalk
+    - ~/toaster/toast.sh releases beanstalk "LatestVersion"
 
 deploy:
   stage: deploy
