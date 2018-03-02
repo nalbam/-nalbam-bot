@@ -19,7 +19,7 @@ build:
   stage: build
   image: maven:latest
   script:
-    - ~/toaster/toast.sh build version
+#    - ~/toaster/toast.sh build version
     - mvn package
   artifacts:
     paths:
@@ -31,7 +31,7 @@ releases:
   script:
     - pip install awscli
     - ~/toaster/toast.sh prepare
-    - ~/toaster/toast.sh releases beanstalk "LatestVersion"
+    - ~/toaster/toast.sh releases beanstalk LatestVersion
 
 deploy:
   stage: deploy
