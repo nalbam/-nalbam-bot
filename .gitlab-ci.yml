@@ -41,7 +41,7 @@ deploy:
     - master
   script:
     - pip install awscli
-    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-prod
+    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-prod LatestVersion
 
 after_script:
   - ls -alh target
