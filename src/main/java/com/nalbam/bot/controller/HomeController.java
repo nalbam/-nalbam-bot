@@ -9,6 +9,11 @@ import java.util.Map;
 @RestController
 public class HomeController {
 
+    @GetMapping("/")
+    public String home() {
+        return "OK";
+    }
+
     @GetMapping("/health")
     public Map<String, String> health() {
         return PackageUtil.getData(this.getClass());
