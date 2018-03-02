@@ -36,7 +36,17 @@ releases:
     paths:
       - target/
 
-deploy:
+deploy-dev:
+  stage: deploy
+  image: python:latest
+  when: manual
+  only:
+    - master
+  script:
+    - pip install awscli
+    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-dev LatestVersion
+
+deploy-prod:
   stage: deploy
   image: python:latest
   when: manual
