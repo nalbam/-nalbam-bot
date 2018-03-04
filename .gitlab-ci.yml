@@ -45,9 +45,8 @@ releases:
 deploy-dev:
   stage: deploy
   image: python:latest
-  when: manual
   only:
-    - master
+    - dev
   script:
     - pip install awscli
     - ~/toaster/toast.sh deploy beanstalk nalbam-bot-dev LatestVersion
