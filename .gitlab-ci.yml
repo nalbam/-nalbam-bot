@@ -51,6 +51,15 @@ deploy-dev:
     - pip install awscli
     - ~/toaster/toast.sh deploy beanstalk nalbam-bot-dev LatestVersion
 
+deploy-qa:
+  stage: deploy
+  image: python:latest
+  only:
+    - master
+  script:
+    - pip install awscli
+    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-qa LatestVersion
+
 deploy-prod:
   stage: deploy
   image: python:latest
