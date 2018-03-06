@@ -26,6 +26,7 @@ build:
   stage: build
   image: maven:latest
   script:
+    - ~/toaster/toast.sh build version
     - mvn package -DskipTests
   artifacts:
     paths:
@@ -37,7 +38,7 @@ releases:
   script:
     - pip install awscli
     - ~/toaster/toast.sh prepare
-    - ~/toaster/toast.sh releases beanstalk LatestVersion
+    - ~/toaster/toast.sh releases beanstalk
   artifacts:
     paths:
       - target/
@@ -49,7 +50,7 @@ deploy-dev:
     - dev
   script:
     - pip install awscli
-    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-dev LatestVersion
+    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-dev
 
 deploy-qa:
   stage: deploy
@@ -58,7 +59,7 @@ deploy-qa:
     - master
   script:
     - pip install awscli
-    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-qa LatestVersion
+    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-qa
 
 deploy-prod:
   stage: deploy
@@ -68,7 +69,7 @@ deploy-prod:
     - master
   script:
     - pip install awscli
-    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-prod LatestVersion
+    - ~/toaster/toast.sh deploy beanstalk nalbam-bot-prod
 
 after_script:
   - ls -alh target
