@@ -10,7 +10,7 @@ cache:
 stages:
   - test
   - build
-  - releases
+  - release
   - deploy
 
 before_script:
@@ -32,13 +32,13 @@ build:
     paths:
       - target/
 
-releases:
-  stage: releases
+release:
+  stage: release
   image: python:latest
   script:
     - pip install awscli
     - ~/toaster/toast.sh prepare
-    - ~/toaster/toast.sh releases beanstalk
+    - ~/toaster/toast.sh release beanstalk
   artifacts:
     paths:
       - target/
