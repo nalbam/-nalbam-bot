@@ -36,7 +36,6 @@ release:
   stage: release
   image: nalbam/builder:awscli
   script:
-    - ~/toaster/toast.sh prepare
     - ~/toaster/toast.sh release beanstalk
   artifacts:
     paths:
