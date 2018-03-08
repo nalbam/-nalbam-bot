@@ -34,9 +34,8 @@ build:
 
 release:
   stage: release
-  image: python:latest
+  image: nalbam/builder:awscli
   script:
-    - pip install awscli
     - ~/toaster/toast.sh prepare
     - ~/toaster/toast.sh release beanstalk
   artifacts:
@@ -45,30 +44,27 @@ release:
 
 deploy-dev:
   stage: deploy
-  image: python:latest
+  image: nalbam/builder:awscli
   only:
     - dev
   script:
-    - pip install awscli
     - ~/toaster/toast.sh deploy beanstalk nalbam-bot-dev
 
 deploy-qa:
   stage: deploy
-  image: python:latest
+  image: nalbam/builder:awscli
   only:
     - master
   script:
-    - pip install awscli
     - ~/toaster/toast.sh deploy beanstalk nalbam-bot-qa
 
 deploy-prod:
   stage: deploy
-  image: python:latest
+  image: nalbam/builder:awscli
   when: manual
   only:
     - master
   script:
-    - pip install awscli
     - ~/toaster/toast.sh deploy beanstalk nalbam-bot-prod
 
 after_script:
