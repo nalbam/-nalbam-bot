@@ -1,6 +1,6 @@
 # Dockerfile
 
-FROM java:8
+FROM openjdk:8-alpine
 
 MAINTAINER me@nalbam.com
 
@@ -11,6 +11,6 @@ EXPOSE 8080
 
 WORKDIR data
 
-ADD ROOT.jar /
+COPY ROOT.jar .
 
-CMD ["java", "-jar", "/ROOT.jar"]
+CMD ["java", "-jar", "ROOT.jar"]
