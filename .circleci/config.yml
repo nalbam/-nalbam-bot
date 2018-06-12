@@ -1,0 +1,17 @@
+#
+# CircleCI 2.0
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: nalbam/builder:java
+    steps:
+      - checkout
+      - run: mvn test
+
+workflows:
+  version: 2
+  lambda:
+    jobs:
+      - build
