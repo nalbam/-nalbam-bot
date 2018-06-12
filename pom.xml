@@ -24,7 +24,7 @@
         <!-- nalbam-repo -->
         <repository-id>nalbam-repo</repository-id>
         <repository-name>nalbam-repo</repository-name>
-        <repository-url>http://repo.nalbam.com/maven2</repository-url>
+        <repository-url>https://repo.nalbam.com/maven2</repository-url>
 
         <!-- versions -->
         <nalbam.version>1.0.0</nalbam.version>
