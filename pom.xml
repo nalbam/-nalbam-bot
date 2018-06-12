@@ -5,13 +5,13 @@
 
     <groupId>com.nalbam</groupId>
     <artifactId>nalbam-bot</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.10.RELEASE</version>
+        <version>1.5.13.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -27,7 +27,7 @@
         <repository-url>http://repo.nalbam.com/maven2</repository-url>
 
         <!-- versions -->
-        <nalbam.version>0.2.3</nalbam.version>
+        <nalbam.version>1.0.0</nalbam.version>
         <swagger.version>2.8.0</swagger.version>
         <aws.version>1.11.213</aws.version>
     </properties>
@@ -98,11 +98,11 @@
         </dependency>
 
         <!-- actuator -->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-actuator</artifactId>-->
-        <!--<optional>true</optional>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <!-- test -->
         <dependency>
