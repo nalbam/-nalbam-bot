@@ -47,7 +47,7 @@ jobs:
       - attach_workspace:
           at: /tmp
 
-      - run: aws s3 sync /tmp/target/ s3://repo.nalbam.com/maven2/com/nalbam/${CIRCLE_PROJECT_REPONAME}/1.0.0/ --acl public-read
+      - run: aws s3 sync /tmp/target/ s3://repo.nalbam.com/maven2/com/nalbam/${CIRCLE_PROJECT_REPONAME}/1.0.0/
 
 workflows:
   version: 2
