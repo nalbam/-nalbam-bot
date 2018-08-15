@@ -14,23 +14,24 @@ $RECYCLE.BIN/
 # Mac
 .DS_Store
 
-# java
-*.class
-*.jar
-*.war
-*.ear
+# Java
+.project
+.classpath
+.factorypath
 
-# maven
+# Maven
 target/
 build/
-
-# eclipse
-.settings/
-.metadata/
 
 # JetBrains
 .idea/
 *.iml
 
-# log
+# Eclipse
+.settings/
+.metadata/
+
+# Temp
+*.pid
 *.log
+*.tmp
