@@ -5,7 +5,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/openjdk:8-jdk-browsers
 
     working_directory: ~/repo
 
@@ -14,8 +14,7 @@ jobs:
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "pom.xml" }}
-          - v1-dependencies-
+            - circleci-cache-{{ checksum "pom.xml" }}
 
       - run: mvn package -Dthis.version=1.1.1
       - run: cp pom.xml target/${CIRCLE_PROJECT_REPONAME}-1.1.1.pom
@@ -23,7 +22,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
+          key: circleci-cache-{{ checksum "pom.xml" }}
 
       - store_test_results:
           path: ~/repo/target/surefire-reports
@@ -40,7 +39,7 @@ jobs:
 
   release:
     docker:
-      - image: nalbam/builder
+      - image: opspresso/awscli
 
     steps:
       - checkout
